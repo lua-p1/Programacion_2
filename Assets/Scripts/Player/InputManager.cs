@@ -3,13 +3,15 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     PlayerControls playerControls;
-    public Vector2 _movementInput;
+    public Vector2 movementInput;
+    public float verticalInput;
+    public float horizontalInput;
     private void OnEnable()
     {
         if(playerControls == null)
         {
             playerControls = new PlayerControls();
-            playerControls.PlayerMovements.Movement.performed += i => _movementInput = i.ReadValue<Vector2>();
+            playerControls.PlayerMovements.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
 
         }
         playerControls.Enable();
@@ -17,5 +19,14 @@ public class InputManager : MonoBehaviour
     private void OnDisable()
     {
         playerControls.Disable();
+    }
+    public void HandleAllInputs()
+    {
+        HandleMovementInput();
+    }
+    private void HandleMovementInput()
+    {
+        verticalInput = movementInput.y;
+        horizontalInput = movementInput.x;
     }
 }
