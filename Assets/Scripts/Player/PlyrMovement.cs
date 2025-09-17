@@ -17,6 +17,7 @@ public class PlyrMovement : MonoBehaviour
     {
         _speed = 10f;
         _rotSpeed = 10f;
+        _rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
     public void HandleAllMovement()
     {
