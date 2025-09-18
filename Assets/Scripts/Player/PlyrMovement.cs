@@ -2,21 +2,17 @@ using UnityEngine;
 public class PlyrMovement : MonoBehaviour
 {
     private InputManager _inputManager;
-    private Transform _cameraObj;
     private Rigidbody _rb;
-    [SerializeField]private float _speed;
-    [SerializeField]private float _rotSpeed;
+    [SerializeField] private float _speed = 10f;
+    [SerializeField] private float _rotSpeed = 10f;
     private Vector3 _targetDirection;
     private void Awake()
     {
         _inputManager = GetComponent<InputManager>();
         _rb = GetComponent<Rigidbody>();
-        _cameraObj = _rb.transform;
     }
     private void Start()
     {
-        _speed = 10f;
-        _rotSpeed = 10f;
         _rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
     public void HandleAllMovement()
@@ -27,18 +23,18 @@ public class PlyrMovement : MonoBehaviour
     }
     private void CalculateDirection()
     {
-        _targetDirection = _cameraObj.forward * _inputManager.verticalInput + _cameraObj.right * _inputManager.horizontalInput;
-        _targetDirection.y = 0;
+        _targetDirection = transform.forward * _inputManager.verticalInput + transform.right * _inputManager.horizontalInput;
         _targetDirection.Normalize();
     }
     private void HandleMovement()
     {
-        Vector3 targetVelocity = _targetDirection * _speed;
-        _rb.velocity = targetVelocity;
+        Vector3 velocity = _targetDirection * _speed;
+        velocity.y = _rb.velocity.y;
+        _rb.velocity = velocity;
     }
     private void HandleRotation()
     {
-        if (_targetDirection.sqrMagnitude > 0.001f)
+        if (_targetDirection.sqrMagnitude > 0.001f && _inputManager.verticalInput > 0)
         {
             Quaternion targetRotation = Quaternion.LookRotation(_targetDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotSpeed * Time.deltaTime);
