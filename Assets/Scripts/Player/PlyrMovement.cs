@@ -11,7 +11,7 @@ public class PlyrMovement : MonoBehaviour
     {
         _inputManager = GetComponent<InputManager>();
         _rb = GetComponent<Rigidbody>();
-        _cameraObj = Camera.main.transform;
+        _cameraObj = _rb.transform;
     }
     private void Start()
     {
