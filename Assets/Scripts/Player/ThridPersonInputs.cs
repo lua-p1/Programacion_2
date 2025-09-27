@@ -1,5 +1,5 @@
 using UnityEngine;
-public class PersonajeTercera : MonoBehaviour
+public class ThridPersonInputs : MonoBehaviour
 {
     public Vector3 movimiento;
     public Rigidbody rb;
@@ -26,11 +26,11 @@ public class PersonajeTercera : MonoBehaviour
         animator.SetFloat("MovementY", vertical);
         bool isWalking = horizontal != 0 || vertical != 0;
         animator.SetBool("Walk", isWalking);
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
-        transform.Rotate(Vector3.up * mouseX * sensibilidadX * Time.deltaTime);
-        rotationX -= mouseY * sensibilidadY;
-        rotationX = Mathf.Clamp(rotationX, 20, 20);
-        domo.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
+        //float mouseX = Input.GetAxis("Mouse X");
+        //float mouseY = Input.GetAxis("Mouse Y");
+        //transform.Rotate(Vector3.up * mouseX * sensibilidadX * Time.deltaTime);
+        //rotationX -= mouseY * sensibilidadY;
+        //rotationX = Mathf.Clamp(rotationX, 20, 20);
+        //domo.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
     }
 }
