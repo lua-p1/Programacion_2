@@ -2,21 +2,21 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MenuPrincipal : MonoBehaviour
 {
-    public void Jugar()
+    public void Play()
     {
         SceneManager.LoadScene("SampleScene");
     }
-    public void MostrarControles(GameObject panelControles)
+    public void ShowControls(GameObject panelControles)
     {
         panelControles.SetActive(true);
     }
-    public void CerrarControles(GameObject panelControles)
+    public void CloseControls(GameObject panelControles)
     {
         panelControles.SetActive(false);
     }
-    public void Salir()
+    public void QuitGame()
     {
+        Debug.Log("El juego se cerro");
         Application.Quit();
-        Debug.Log("El juego se cerraria (en editor no se cierra).");
     }
 }
