@@ -97,14 +97,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b7d54e0dba37e04c9495efb5202e9f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movimiento: {x: 0, y: 0, z: 0}
-  rb: {fileID: 7074385394568898092}
   speed: 4
-  animator: {fileID: 7755379436742882903}
-  domo: {fileID: 0}
-  sensibilidadX: 3000
-  sensibilidadY: 3000
-  rotationX: 1
+  sensibilidadX: 1
+  camara: {fileID: 0}
+--- !u!1 &6162239145362726260
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4711480157749866162}
+  m_Layer: 0
+  m_Name: FollowCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4711480157749866162
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6162239145362726260}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.662, z: -0.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4413677540121537581}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4236252464320154566
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -195,18 +221,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3edac16b9ba15bb49948e8a550e180b7,
+        type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 4711480157749866162}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3edac16b9ba15bb49948e8a550e180b7, type: 3}
 --- !u!4 &4413677540121537581 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3edac16b9ba15bb49948e8a550e180b7,
-    type: 3}
-  m_PrefabInstance: {fileID: 4236252464320154566}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &7755379436742882903 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 3edac16b9ba15bb49948e8a550e180b7,
     type: 3}
   m_PrefabInstance: {fileID: 4236252464320154566}
   m_PrefabAsset: {fileID: 0}
