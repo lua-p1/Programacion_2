@@ -27,10 +27,4 @@ public class GameManager : MonoBehaviour
             Debug.Log("Jugador encontrado");
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
