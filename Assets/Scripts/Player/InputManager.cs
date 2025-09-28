@@ -19,4 +19,8 @@ public class InputManager : MonoBehaviour
     {
         return _playerControls.PlayerMovements.Movement.ReadValue<Vector2>();
     }
+    public Vector2 GetMouseMovement()
+    {
+        return _playerControls.PlayerMovements.MouseMovement.ReadValue<Vector2>();
+    }
 }

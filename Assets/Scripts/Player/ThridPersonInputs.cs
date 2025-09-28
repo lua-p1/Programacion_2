@@ -3,9 +3,11 @@ public class ThridPersonInputs : MonoBehaviour
 {
     [SerializeField]private float speed;
     [SerializeField]private float sensibilidadX;
+    [SerializeField]private float timeToRotate;
     private Vector2 _getInputs;
+    private Vector2 _getMouseInputs;
     private Animator animator;
-    public Transform camara;
+    private float currentYRotation = 0f;
     void Start()
     {
         Cursor.visible = false;
@@ -15,19 +17,12 @@ public class ThridPersonInputs : MonoBehaviour
     void Update()
     {
         _getInputs = InputManager.instance.GetMovement();
+        _getMouseInputs = InputManager.instance.GetMouseMovement();
         Vector3 direction = new Vector3(_getInputs.x, 0, _getInputs.y).normalized;
-        if (direction != Vector3.zero)
-        {
-            Vector3 camForward = new Vector3(camara.forward.x, 0, camara.forward.z).normalized;
-            Vector3 camRight = new Vector3(camara.right.x, 0, camara.right.z).normalized;
-            Vector3 moveDir = camForward * direction.z + camRight * direction.x;
-            if (direction.z > 0f)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(moveDir);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * sensibilidadX);
-            }
-            transform.position += moveDir * speed * Time.deltaTime;
-        }
+        transform.position += direction * speed * Time.deltaTime;
+        currentYRotation += _getMouseInputs.x * sensibilidadX * Time.deltaTime;
+        Quaternion targetRotation = Quaternion.Euler(0, currentYRotation, 0);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * timeToRotate);
         animator.SetFloat("MovementX", Input.GetAxis("Horizontal"));
         animator.SetFloat("MovementY", Input.GetAxis("Vertical"));
         animator.SetBool("Walk", _getInputs != Vector2.zero);
