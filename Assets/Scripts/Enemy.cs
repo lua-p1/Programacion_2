@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField]private float VisionRange;
     void Start()
     {
         
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        Follow();
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, VisionRange);
+    }
+    private void Follow()
+    {
+        if (GameManager.instance.player = null) return;
+        print("Siguiendo al jugador");
     }
 }
