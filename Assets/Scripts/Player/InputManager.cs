@@ -2,31 +2,25 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     private PlayerControls _playerControls;
-    public Vector2 movementInput { get; private set; }
-    public float verticalInput { get; private set; }
-    public float horizontalInput { get; private set; }
+    public static InputManager instance;
     private void Awake()
     {
-        _playerControls = new PlayerControls();
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
     }
     private void OnEnable()
     {
+        _playerControls = new PlayerControls();
         _playerControls.Enable();
-        _playerControls.PlayerMovements.Movement.performed += OnMovementPerformed;
-        _playerControls.PlayerMovements.Movement.canceled += ctx => movementInput = Vector2.zero;
     }
-    private void OnDisable()
+    public Vector2 GetMovement()
     {
-        _playerControls.PlayerMovements.Movement.performed -= OnMovementPerformed;
-        _playerControls.Disable();
+        return _playerControls.PlayerMovements.Movement.ReadValue<Vector2>();
     }
-    private void OnMovementPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    public Vector2 GetMouseMovement()
     {
-        movementInput = ctx.ReadValue<Vector2>();
-    }
-    public void HandleAllInputs()
-    {
-        verticalInput = movementInput.y;
-        horizontalInput = movementInput.x;
+        return _playerControls.PlayerMovements.MouseMovement.ReadValue<Vector2>();
     }
 }
