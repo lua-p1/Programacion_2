@@ -2,9 +2,11 @@ using UnityEngine;
 public class PlayerHealth
 {
     private float _currentHealth;
-    public PlayerHealth(float _currentHealth)
+    private Animator _animator;
+    public PlayerHealth(float _currentHealth, Animator _animator)
     {
         this._currentHealth = _currentHealth;
+        this._animator = _animator;
     }
     private void CheckHealth()
     {
@@ -22,6 +24,7 @@ public class PlayerHealth
     private void Die()
     {
         Debug.Log("Player Died");
+        _animator.SetBool("OnDeath", true);
     }
     public float GetLife { get => _currentHealth; }
 }

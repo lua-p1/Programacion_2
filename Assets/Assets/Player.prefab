@@ -54,8 +54,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.25988674
-  m_Height: 1.8350267
+  m_Radius: 0.25
+  m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.907321, z: 0.01556778}
 --- !u!54 &7074385394568898092
@@ -100,7 +100,6 @@ MonoBehaviour:
   speed: 4
   sensibilidadX: 10
   timeToRotate: 10
-  _life: 0
 --- !u!1 &4929454541738602980
 GameObject:
   m_ObjectHideFlags: 0

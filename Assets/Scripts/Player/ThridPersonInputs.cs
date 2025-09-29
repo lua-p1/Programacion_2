@@ -8,15 +8,15 @@ public class ThridPersonInputs : MonoBehaviour
     [SerializeField]private PlayerHealth _playerHealth;
     private Vector2 _getInputs;
     private Vector2 _getMouseInputs;
-    private Animator animator;
+    private Animator _animator;
     private float currentYRotation = 0f;
 
     void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        animator = GetComponentInChildren<Animator>();
-        _playerHealth = new PlayerHealth(100f);
+        _animator = GetComponentInChildren<Animator>();
+        _playerHealth = new PlayerHealth(100f,_animator);
     }
 
     void Update()
@@ -28,9 +28,9 @@ public class ThridPersonInputs : MonoBehaviour
         currentYRotation += _getMouseInputs.x * sensibilidadX * Time.deltaTime;
         Quaternion targetRotation = Quaternion.Euler(0, currentYRotation, 0);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * timeToRotate);
-        animator.SetFloat("MovementX", _getInputs.x);
-        animator.SetFloat("MovementY", _getInputs.y);
-        animator.SetBool("Walk", _getInputs != Vector2.zero);
+        _animator.SetFloat("MovementX", _getInputs.x);
+        _animator.SetFloat("MovementY", _getInputs.y);
+        _animator.SetBool("Walk", _getInputs != Vector2.zero);
     }
     public PlayerHealth GetPlayerComponentLife { get => _playerHealth; }
 }
