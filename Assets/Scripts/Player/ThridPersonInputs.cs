@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class ThridPersonInputs : MonoBehaviour
 {
-    [SerializeField] private float speed;
-    [SerializeField] private float sensibilidadX;
-    [SerializeField] private float timeToRotate;
-
+    [SerializeField]private float speed;
+    [SerializeField]private float sensibilidadX;
+    [SerializeField]private float timeToRotate;
+    [SerializeField]private PlayerHealth _playerHealth;
     private Vector2 _getInputs;
     private Vector2 _getMouseInputs;
     private Animator animator;
@@ -16,6 +16,7 @@ public class ThridPersonInputs : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         animator = GetComponentInChildren<Animator>();
+        _playerHealth = new PlayerHealth(100f);
     }
 
     void Update()
@@ -31,4 +32,5 @@ public class ThridPersonInputs : MonoBehaviour
         animator.SetFloat("MovementY", _getInputs.y);
         animator.SetBool("Walk", _getInputs != Vector2.zero);
     }
+    public PlayerHealth GetPlayerComponentLife { get => _playerHealth; }
 }

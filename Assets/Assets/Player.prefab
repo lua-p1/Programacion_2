@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1334814110208395276}
   - component: {fileID: 7074385394568898092}
   - component: {fileID: 6358709593447872807}
-  - component: {fileID: 9175172933852286383}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -101,28 +100,7 @@ MonoBehaviour:
   speed: 4
   sensibilidadX: 10
   timeToRotate: 10
---- !u!195 &9175172933852286383
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2756146578517040845}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  _life: 0
 --- !u!1 &4929454541738602980
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,6 +199,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5629838611268062301, guid: 3edac16b9ba15bb49948e8a550e180b7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.101
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 3edac16b9ba15bb49948e8a550e180b7,
         type: 3}
