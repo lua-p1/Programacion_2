@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class ThridPersonInputs : MonoBehaviour
 {
     [SerializeField]private float speed;
@@ -10,7 +9,6 @@ public class ThridPersonInputs : MonoBehaviour
     private Vector2 _getMouseInputs;
     private Animator _animator;
     private float currentYRotation = 0f;
-
     void Start()
     {
         Cursor.visible = false;
@@ -18,7 +16,6 @@ public class ThridPersonInputs : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
         _playerHealth = new PlayerHealth(100f,_animator);
     }
-
     void Update()
     {
         _getInputs = InputManager.instance.GetMovement();

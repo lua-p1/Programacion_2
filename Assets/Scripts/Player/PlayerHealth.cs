@@ -1,3 +1,5 @@
+using Unity.VisualScripting;
+using UnityEditor.SearchService;
 using UnityEngine;
 public class PlayerHealth
 {
@@ -13,6 +15,7 @@ public class PlayerHealth
         if (_currentHealth <= 0)
         {
             Die();
+            
         }
     }
     public void TakeDamage(float damage)
@@ -25,6 +28,7 @@ public class PlayerHealth
     {
         Debug.Log("Player Died");
         _animator.SetBool("OnDeath", true);
+        //WaitForSeconds(3f);
     }
     public float GetLife { get => _currentHealth; }
 }

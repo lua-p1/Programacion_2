@@ -51,7 +51,6 @@ public class Enemy : MonoBehaviour
     }
     public void Attack()
     {
-        print("Attack");
         if (GameManager.instance.player != null)
         {
             var life = GameManager.instance.player.GetComponent<ThridPersonInputs>().GetPlayerComponentLife;

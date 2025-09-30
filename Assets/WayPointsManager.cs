@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
-
 public class WayPointsManager : MonoBehaviour
 {
     [SerializeField]private List<Transform> wayPoints = new List<Transform>();
     [SerializeField]private int _wayPointIndex;
     [SerializeField]private bool _isMoving;
     [SerializeField]private float _speed;
-    [SerializeField] private float _rotSpeed;
+    [SerializeField]private float _rotSpeed;
     [SerializeField]private bool _isLooping;
-    [SerializeField] private bool _isRandom;
+    [SerializeField]private bool _isRandom;
+    [SerializeField]private float _damage;
     private void Start()
     {
         Patrol();
@@ -44,4 +44,19 @@ public class WayPointsManager : MonoBehaviour
                 }               
             }
         }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (GameManager.instance.player != null)
+        {
+            var life = GameManager.instance.player.GetComponent<ThridPersonInputs>().GetPlayerComponentLife;
+            if (life != null)
+            {
+                life.TakeDamage(_damage);
+            }
+            else
+            {
+                Debug.LogError("No se encontro el componente PlayerHealth en el jugador");
+            }
+        }
     }
+}
