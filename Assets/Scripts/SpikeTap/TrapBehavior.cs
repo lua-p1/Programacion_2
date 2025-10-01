@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 public class TrapBehavior : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float _damage;
+    private void OnCollisionEnter(Collision collision)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (GameManager.instance.player != null)
+        {
+            var life = GameManager.instance.player.GetComponent<ThirdPersonInputs>().GetPlayerComponentLife;
+            if (life != null)
+            {
+                life.TakeDamage(_damage);
+            }
+            else
+            {
+                Debug.LogError("No se encontro el componente PlayerHealth en el jugador");
+            }
+        }
     }
 }

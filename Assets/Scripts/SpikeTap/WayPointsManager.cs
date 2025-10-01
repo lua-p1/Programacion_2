@@ -9,7 +9,6 @@ public class WayPointsManager : MonoBehaviour
     [SerializeField]private float _rotSpeed;
     [SerializeField]private bool _isLooping;
     [SerializeField]private bool _isRandom;
-    [SerializeField]private float _damage;
     private void Start()
     {
         Patrol();
@@ -44,19 +43,4 @@ public class WayPointsManager : MonoBehaviour
                 }               
             }
         }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (GameManager.instance.player != null)
-        {
-            var life = GameManager.instance.player.GetComponent<ThirdPersonInputs>().GetPlayerComponentLife;
-            if (life != null)
-            {
-                life.TakeDamage(_damage);
-            }
-            else
-            {
-                Debug.LogError("No se encontro el componente PlayerHealth en el jugador");
-            }
-        }
-    }
 }
