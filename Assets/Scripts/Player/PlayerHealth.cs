@@ -1,21 +1,20 @@
-using Unity.VisualScripting;
-using UnityEditor.SearchService;
 using UnityEngine;
 public class PlayerHealth
 {
     private float _currentHealth;
     private Animator _animator;
-    public PlayerHealth(float _currentHealth, Animator _animator)
+    private ThirdPersonInputs _playerInputs;
+    public PlayerHealth(float _currentHealth, Animator _animator, ThirdPersonInputs _playerInputs)
     {
         this._currentHealth = _currentHealth;
         this._animator = _animator;
+        this._playerInputs = _playerInputs;
     }
     private void CheckHealth()
     {
         if (_currentHealth <= 0)
         {
             Die();
-            
         }
     }
     public void TakeDamage(float damage)
@@ -28,7 +27,7 @@ public class PlayerHealth
     {
         Debug.Log("Player Died");
         _animator.SetBool("OnDeath", true);
-        //WaitForSeconds(3f);
+        _playerInputs.OnDeath();
     }
     public float GetLife { get => _currentHealth; }
 }

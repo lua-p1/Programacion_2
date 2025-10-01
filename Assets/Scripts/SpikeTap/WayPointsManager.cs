@@ -17,7 +17,7 @@ public class WayPointsManager : MonoBehaviour
     private void Patrol()
     {
         _wayPointIndex = 0;
-        _isMoving = true;
+        //_isMoving = true;
     }
     private void Update()
     {
@@ -48,7 +48,7 @@ public class WayPointsManager : MonoBehaviour
     {
         if (GameManager.instance.player != null)
         {
-            var life = GameManager.instance.player.GetComponent<ThridPersonInputs>().GetPlayerComponentLife;
+            var life = GameManager.instance.player.GetComponent<ThirdPersonInputs>().GetPlayerComponentLife;
             if (life != null)
             {
                 life.TakeDamage(_damage);
