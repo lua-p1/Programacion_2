@@ -779,7 +779,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 1.5, z: -24.099998}
+  m_LocalPosition: {x: 0.3, y: 1.5, z: -8.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2318,7 +2318,7 @@ PrefabInstance:
     - target: {fileID: 6124080740077008363, guid: 3386cf74680a6a74b91ee83fc65b4d85,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.51
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6124080740077008363, guid: 3386cf74680a6a74b91ee83fc65b4d85,
         type: 3}
@@ -2359,6 +2359,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518614928938128611, guid: 3386cf74680a6a74b91ee83fc65b4d85,
+        type: 3}
+      propertyPath: m_BaseOffset
+      value: -0.08
       objectReference: {fileID: 0}
     - target: {fileID: 7606928093454805972, guid: 3386cf74680a6a74b91ee83fc65b4d85,
         type: 3}
@@ -2491,6 +2496,11 @@ PrefabInstance:
       propertyPath: _initHealth
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 1093530137921047402, guid: f88738b729e7a1343962462e9f559e72,
+        type: 3}
+      propertyPath: _healthSlider
+      value: 
+      objectReference: {fileID: 153423061}
     - target: {fileID: 2601738266272717624, guid: f88738b729e7a1343962462e9f559e72,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2504,7 +2514,7 @@ PrefabInstance:
     - target: {fileID: 2601738266272717624, guid: f88738b729e7a1343962462e9f559e72,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -18.8
+      value: -3.4
       objectReference: {fileID: 0}
     - target: {fileID: 2601738266272717624, guid: f88738b729e7a1343962462e9f559e72,
         type: 3}
