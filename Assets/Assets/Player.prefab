@@ -1149,6 +1149,7 @@ MonoBehaviour:
   speed: 4
   sensibilidadX: 10
   timeToRotate: 10
+  _navMeshAgent: {fileID: 6462225925527819766}
   _initHealth: 100
   _healthSlider: {fileID: 0}
 --- !u!195 &6462225925527819766
