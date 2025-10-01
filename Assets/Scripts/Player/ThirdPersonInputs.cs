@@ -1,11 +1,13 @@
 using UnityEngine;
+using UnityEngine.UI;
 public class ThirdPersonInputs : MonoBehaviour
 {
     [SerializeField]private float speed;
     [SerializeField]private float sensibilidadX;
     [SerializeField]private float timeToRotate;
     [SerializeField]private PlayerHealth _playerHealth;
-    [SerializeField] private float _initHealth;
+    [SerializeField]private float _initHealth;
+    [SerializeField]private Slider _healthSlider;
     private Vector2 _getInputs;
     private Vector2 _getMouseInputs;
     private Animator _animator;
@@ -16,7 +18,9 @@ public class ThirdPersonInputs : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         _animator = GetComponentInChildren<Animator>();
-        _playerHealth = new PlayerHealth(_initHealth, _animator,this);
+        _playerHealth = new PlayerHealth(_initHealth, _animator,this, _healthSlider);
+        _healthSlider.maxValue = _initHealth;
+        _healthSlider.value = _initHealth;
     }
     void Update()
     {
