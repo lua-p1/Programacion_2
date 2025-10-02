@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class HandlerCallFather : MonoBehaviour
 {
     private Enemy _enemy;

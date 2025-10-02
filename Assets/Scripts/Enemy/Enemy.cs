@@ -20,6 +20,14 @@ public class Enemy : MonoBehaviour
     private void Follow()
     {
         if (GameManager.instance.player == null) return;
+        var playerHealth = GameManager.instance.player.GetComponent<ThirdPersonInputs>().GetPlayerComponentLife;
+        if (playerHealth.GetLife <= 0)
+        {
+            _animator.SetBool("EnemyIsAttacking", false);
+            _animator.SetBool("EnemyIsWalking", false);
+            _navMeshAgent.isStopped = true;
+            return;
+        }
         directionToPlayer = GameManager.instance.player.transform.position - this.transform.position;
         float distanceToPlayer = directionToPlayer.magnitude;
         if (distanceToPlayer <= _visionRange)
@@ -51,10 +59,9 @@ public class Enemy : MonoBehaviour
     }
     public void Attack()
     {
-        print("Attack");
         if (GameManager.instance.player != null)
         {
-            var life = GameManager.instance.player.GetComponent<ThridPersonInputs>().GetPlayerComponentLife;
+            var life = GameManager.instance.player.GetComponent<ThirdPersonInputs>().GetPlayerComponentLife;
             if (life != null)
             {
                 life.TakeDamage(_damage);

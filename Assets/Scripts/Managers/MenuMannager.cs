@@ -19,4 +19,8 @@ public class MenuPrincipal : MonoBehaviour
         Debug.Log("El juego se cerro");
         Application.Quit();
     }
+    public void ReturnMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 }
