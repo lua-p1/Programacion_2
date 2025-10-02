@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 public class ThirdPersonInputs : MonoBehaviour
 {
-    [SerializeField]private float speed;
     [SerializeField]private float sensibilidadX;
     [SerializeField]private float timeToRotate;
     [SerializeField]private PlayerHealth _playerHealth;
@@ -31,7 +30,7 @@ public class ThirdPersonInputs : MonoBehaviour
         _getInputs = InputManager.instance.GetMovement();
         _getMouseInputs = InputManager.instance.GetMouseMovement();
         Vector3 direction = new Vector3(_getInputs.x, 0, _getInputs.y).normalized;
-        transform.position += transform.TransformDirection(direction) * speed * Time.deltaTime;
+        transform.position += transform.TransformDirection(direction) * _navMeshAgent.speed * Time.deltaTime;
         currentYRotation += _getMouseInputs.x * sensibilidadX * Time.deltaTime;
         Quaternion targetRotation = Quaternion.Euler(0, currentYRotation, 0);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * timeToRotate);
