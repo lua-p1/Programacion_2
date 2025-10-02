@@ -31,6 +31,7 @@ public class PlayerHealth
             _healthSlider.value = _currentHealth;
         }
         CheckHealth();
+        Debug.Log(_currentHealth);
     }
     private void Die()
     {

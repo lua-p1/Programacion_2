@@ -1130,7 +1130,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -1146,7 +1146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8a783eda5b0fe74097e64604b1f8c3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
   sensibilidadX: 10
   timeToRotate: 10
   _navMeshAgent: {fileID: 6462225925527819766}
@@ -1753,13 +1752,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4929454541738602980}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.17210399, y: -0, z: -0, w: 0.9850788}
   m_LocalPosition: {x: 0, y: 1.82, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4413677540121537581}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 19.82, y: 0, z: 0}
 --- !u!1 &5082549603739112770
 GameObject:
   m_ObjectHideFlags: 0
