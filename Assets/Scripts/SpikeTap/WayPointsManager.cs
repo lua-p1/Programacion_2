@@ -1,52 +1,46 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 public class WayPointsManager : MonoBehaviour
 {
-    [SerializeField]private List<Transform> wayPoints = new List<Transform>();
-    [SerializeField]private int _wayPointIndex;
-    [SerializeField]private bool _isMoving = false;
-    [SerializeField]private bool _isLooping;
-    [SerializeField]private bool _isRandom;
-    [SerializeField]private float _minDistanceToWaypoint = 0.5f;
-    private NavMeshAgent _agent;
+    [SerializeField] private List<Transform> wayPoints = new List<Transform>();
+    [SerializeField] private float _minDistanceToWaypoint = 0.5f;
+    [SerializeField] private float _speed = 3;
+    private Vector3 _currentDestination;
     private void Start()
     {
-        _agent = GetComponent<NavMeshAgent>();
-        if (wayPoints.Count > 0)
+        if (wayPoints.Count < 0)
         {
-            _wayPointIndex = 0;
-            SetNextDestination();
+            return;
         }
+        SetRandomDestination();
     }
     private void Update()
     {
-        if (!_isMoving || wayPoints.Count == 0) return;
-        if (!_agent.pathPending && _agent.remainingDistance <= _minDistanceToWaypoint)
+        MoveTowardsDestination();
+    }
+    private void MoveTowardsDestination()
+    {
+        var distance = _currentDestination - transform.position;
+        if (distance.magnitude < _minDistanceToWaypoint)
         {
-            if (_isRandom)
-            {
-                _wayPointIndex = Random.Range(0, wayPoints.Count);
-            }
-            else
-            {
-                _wayPointIndex++;
-                if (_isLooping && _wayPointIndex >= wayPoints.Count)
-                {
-                    _wayPointIndex = 0;
-                }
-                else if (_wayPointIndex >= wayPoints.Count)
-                {
-                    _isMoving = false;
-                    return;
-                }
-            }
-            SetNextDestination();
+            SetRandomDestination();
+        }
+        Vector3 direction = (_currentDestination - transform.position).normalized;
+        transform.position += direction * _speed * Time.deltaTime;
+    }
+
+    private void SetRandomDestination()
+    {
+        var nextPoint = GetRandomWaypointTransform();
+        if (nextPoint != null)
+        {
+            _currentDestination = nextPoint.position;
         }
     }
-    private void SetNextDestination()
+    private Transform GetRandomWaypointTransform()
     {
-        if (wayPoints.Count == 0) return;
-        _agent.SetDestination(wayPoints[_wayPointIndex].position);
+        if (wayPoints.Count == 0) return null;
+        int randomIndex = Random.Range(0, wayPoints.Count);
+        return wayPoints[randomIndex];
     }
 }

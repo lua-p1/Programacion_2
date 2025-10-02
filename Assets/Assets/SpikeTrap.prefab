@@ -9779,7 +9779,6 @@ GameObject:
   - component: {fileID: 1761745482157804751}
   - component: {fileID: 454878627372021590}
   - component: {fileID: 8655663098883577142}
-  - component: {fileID: 6025884771883127777}
   m_Layer: 0
   m_Name: SpikeTrap
   m_TagString: Untagged
@@ -9820,21 +9819,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   _wayPointIndex: 0
-  _isMoving: 1
-  _isLooping: 0
-  _isRandom: 1
   _minDistanceToWaypoint: 0.5
+  _speed: 5
 --- !u!114 &454878627372021590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9867,32 +9854,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4623165
+  m_Radius: 0.4958887
   m_Height: 2.3781416
   m_Direction: 1
-  m_Center: {x: 0, y: 1.1843404, z: 0.037683487}
---- !u!195 &6025884771883127777
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3296874812338522848}
-  m_Enabled: 1
-  m_AgentTypeID: -1923039037
-  m_Radius: 0.5
-  m_Speed: 7
-  m_Acceleration: 2
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0.5
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2.5
-  m_BaseOffset: -0.05
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_Center: {x: -0.033572197, y: 1.1843404, z: 0.037683487}
 --- !u!1 &3308993687874094135
 GameObject:
   m_ObjectHideFlags: 0
