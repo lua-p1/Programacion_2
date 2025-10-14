@@ -1402,8 +1402,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1940331354}
-  _fadeSpeed: 0.1
-  obstacleLayers:
+  _fadeSpeed: 5
+  _obstacleLayers:
     serializedVersion: 2
     m_Bits: 8
 --- !u!1 &333367877
