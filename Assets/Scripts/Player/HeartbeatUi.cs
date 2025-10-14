@@ -7,12 +7,10 @@ public class HeartBeatUI : MonoBehaviour
     private Image _heartImage;
     private int _currentFrame = 0;
     private float _timer = 0f;
-
     void Start()
     {
         _heartImage = GetComponent<Image>();
     }
-
     void Update()
     {
         _timer += Time.deltaTime;
