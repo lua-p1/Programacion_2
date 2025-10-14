@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.AI;
 public class ThirdPersonInputs : MonoBehaviour
 {
     [SerializeField]private float sensibilidadX;
