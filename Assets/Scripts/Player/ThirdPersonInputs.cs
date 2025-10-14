@@ -6,7 +6,6 @@ public class ThirdPersonInputs : MonoBehaviour
     [SerializeField]private float sensibilidadX;
     [SerializeField]private float timeToRotate;
     [SerializeField]private PlayerHealth _playerHealth;
-    [SerializeField] private NavMeshAgent _navMeshAgent;
     [SerializeField]private float _initHealth;
     [SerializeField]private Slider _healthSlider;
     private Vector2 _getInputs;
@@ -18,7 +17,6 @@ public class ThirdPersonInputs : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponentInChildren<Animator>();
         _playerHealth = new PlayerHealth(_initHealth, _animator,this, _healthSlider);
         _healthSlider.maxValue = _initHealth;
