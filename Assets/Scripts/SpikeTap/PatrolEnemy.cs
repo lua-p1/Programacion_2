@@ -5,7 +5,7 @@ public class PatrolEnemy : MonoBehaviour
 {
     [SerializeField]private List<Transform> wayPoints = new List<Transform>();
     [SerializeField]private float _minDistanceToWaypoint = 0.5f;
-    [SerializeField]private float _speed = 3;
+    [SerializeField]private float _speed = 3f;
     private Vector3 _currentDestination;
     [SerializeField]private NavMeshAgent _agent;
     [SerializeField]private Animator _animator;
