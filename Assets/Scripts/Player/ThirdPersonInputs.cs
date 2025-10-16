@@ -13,7 +13,6 @@ public class ThirdPersonInputs : MonoBehaviour
     private bool _isDead = false;
     private float currentYRotation = 0f;
     private Rigidbody _rb;
-
     void Start()
     {
         Cursor.visible = false;
