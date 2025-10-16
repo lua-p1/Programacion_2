@@ -1964,6 +1964,11 @@ PrefabInstance:
       propertyPath: m_BaseOffset
       value: -0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 7074385394568898092, guid: f88738b729e7a1343962462e9f559e72,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -20084,6 +20089,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7639430428178474512, guid: 3386cf74680a6a74b91ee83fc65b4d85,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -21.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 7639430428178474512, guid: 3386cf74680a6a74b91ee83fc65b4d85,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 31.68
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -25035,6 +25050,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1604044241}
   - component: {fileID: 1604044239}
+  - component: {fileID: 1604044243}
   m_Layer: 0
   m_Name: MasterFloor
   m_TagString: Untagged
@@ -25071,7 +25087,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.13333334
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 34e93d2e7c1657e4ea8532f4e2759ed5, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 786990f7ae9cb6049b8f720cefa5e171, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &1604044241
 Transform:
@@ -25089,6 +25105,27 @@ Transform:
   - {fileID: 2119375741}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1604044243
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604044237}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 57.044113, y: 0, z: 48.74501}
+  m_Center: {x: -21.824764, y: -3.1327386, z: 16.29028}
 --- !u!1 &1604718180
 GameObject:
   m_ObjectHideFlags: 0
@@ -29663,7 +29700,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1324083272}
         m_TargetAssemblyTypeName: MenuPrincipal, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: Replay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

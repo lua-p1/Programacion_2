@@ -6,6 +6,10 @@ public class MenuPrincipal : MonoBehaviour
     {
         SceneManager.LoadScene("SampleScene");
     }
+    public void Replay()
+    {
+        SceneManager.LoadScene("LVL");
+    }
     public void ShowControls(GameObject panelControles)
     {
         panelControles.SetActive(true);
