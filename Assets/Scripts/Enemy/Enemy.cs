@@ -1,61 +1,37 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
+    private Animator _animator;
+    private FSM _fsm;
     [SerializeField]private float _visionRange;
+    [Header("Chase")]
     [SerializeField]private NavMeshAgent _navMeshAgent;
     [SerializeField]private float _attackRange;
     [SerializeField]private float _damage;
-    private Vector3 directionToPlayer;
-    private Animator _animator;
+    [Header("Patrol")]
+    [SerializeField]private List<Transform> wayPoints = new List<Transform>();
+    [SerializeField]private float _minDistanceToWaypoint = 0.5f;
+    [SerializeField]private LayerMask _scenaryMask;
     void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponentInChildren<Animator>();
+        _fsm = new FSM();
+        _fsm.AddState(FSM.State.Chase, new ChaseState(_visionRange, _navMeshAgent, _attackRange, _scenaryMask, _animator, this, _fsm));
+        _fsm.AddState(FSM.State.Patrol, new PatrolState(_visionRange, _navMeshAgent, wayPoints, _minDistanceToWaypoint, _scenaryMask, _animator,this,_fsm));
+        _fsm.ChangeState(FSM.State.Patrol);
     }
-    void Update()
+    private void Update()
     {
-        Follow();
+        print(LineOfSight.IsOnSight(this.transform.position, GameManager.instance.player.transform.position, _scenaryMask));
+        _fsm.OnUpdate();
     }
-    private void Follow()
+    public float CheckPlayerDistance()
     {
-        if (GameManager.instance.player == null) return;
-        var playerHealth = GameManager.instance.player.GetComponent<ThirdPersonInputs>().GetPlayerComponentLife;
-        if (playerHealth.GetLife <= 0)
-        {
-            _animator.SetBool("EnemyIsAttacking", false);
-            _animator.SetBool("EnemyIsWalking", false);
-            _navMeshAgent.isStopped = true;
-            return;
-        }
-        directionToPlayer = GameManager.instance.player.transform.position - this.transform.position;
-        float distanceToPlayer = directionToPlayer.magnitude;
-        if (distanceToPlayer <= _visionRange)
-        {
-            if (distanceToPlayer <= _attackRange)
-            {
-                _animator.SetBool("EnemyIsAttacking", true);
-                _animator.SetBool("EnemyIsWalking", false);
-                _navMeshAgent.isStopped = true;
-                _navMeshAgent.SetDestination(transform.position);
-            }
-            else
-            {
-                _animator.SetBool("EnemyIsAttacking", false);
-                _navMeshAgent.isStopped = false;
-                Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-                _navMeshAgent.SetDestination(GameManager.instance.player.transform.position);
-                _animator.SetBool("EnemyIsWalking", true);
-            }
-        }
-        else
-        {
-            _navMeshAgent.SetDestination(transform.position);
-            _animator.SetBool("EnemyIsWalking", false);
-            _animator.SetBool("EnemyIsAttacking", false);
-            _navMeshAgent.isStopped = true;
-        }
+        var _distanceToPlayer = GameManager.instance.player.transform.position - this.transform.position;
+        return _distanceToPlayer.magnitude;
     }
     public void Attack()
     {
@@ -76,9 +52,7 @@ public class Enemy : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _visionRange);
-        Gizmos.color = Color.green;
-        Gizmos.DrawRay(transform.position, directionToPlayer.normalized * _visionRange);
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, _attackRange);
+        Gizmos.DrawLine(transform.position, GameManager.instance.player.transform.position);
     }
 }
