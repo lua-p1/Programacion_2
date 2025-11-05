@@ -1,17 +1,17 @@
 using UnityEngine;
 public class Lever : MonoBehaviour, IInteractiveObject
 {
-    private Animation _anim;
+    private Animator _anim;
     private bool _canPlay;
     [SerializeField] private Door doorRef;
     private void Start()
     {
         _canPlay = true;
-        //_anim = GetComponentInChild<Animation>();
+        _anim = GetComponentInChildren<Animator>();
     }
     public void InteractAction()
     {
-        if (!_canPlay) return;
+        if (!_canPlay && _anim != null) return;
         _anim.Play("LeverOff");
         if (doorRef != null)
         {

@@ -1,12 +1,12 @@
 using UnityEngine;
 public class Door : MonoBehaviour
 {
-    private Animation _anim;
+    private Animator _anim;
     private bool _isOpen;
     void Start()
     {
-        _anim = GetComponentInChildren<Animation>();
         _isOpen = false;
+        _anim = GetComponent<Animator>();
     }
     public void OpenDoor()
     {
