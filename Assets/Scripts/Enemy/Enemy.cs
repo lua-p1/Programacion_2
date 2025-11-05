@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     }
     private void Update()
     {
-        print(LineOfSight.IsOnSight(this.transform.position, GameManager.instance.player.transform.position, _scenaryMask));
+        //print(LineOfSight.IsOnSight(this.transform.position, GameManager.instance.player.transform.position, _scenaryMask));
         _fsm.OnUpdate();
     }
     public float CheckPlayerDistance()
@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
     {
         if (GameManager.instance.player != null)
         {
-            var life = GameManager.instance.player.GetComponent<ThirdPersonInputs>().GetPlayerComponentLife;
+            var life = GameManager.instance.player.GetComponent<ThirdPersonInputsw>().GetPlayerComponentLife;
             if (life != null)
             {
                 life.TakeDamage(_damage);
@@ -53,6 +53,7 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _visionRange);
         Gizmos.color = Color.blue;
+        if (GameManager.instance.player != null) return;
         Gizmos.DrawLine(transform.position, GameManager.instance.player.transform.position);
     }
 }

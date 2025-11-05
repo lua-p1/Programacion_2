@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        player = GameObject.FindAnyObjectByType<ThirdPersonInputs>().gameObject;
+        player = GameObject.FindAnyObjectByType<ThirdPersonInputsw>().gameObject;
         if (player == null)
         {
             Debug.LogError("No se encontro el jugador");
