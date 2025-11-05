@@ -4,9 +4,9 @@ public class PlayerHealth
 {
     private float _currentHealth;
     private Animator _animator;
-    private ThirdPersonInputs _playerInputs;
+    private ThirdPersonInputsw _playerInputs;
     private Slider _healthSlider;
-    public PlayerHealth(float _currentHealth, Animator _animator, ThirdPersonInputs _playerInputs, Slider _healthSlider)
+    public PlayerHealth(float _currentHealth, Animator _animator, ThirdPersonInputsw _playerInputs, Slider _healthSlider)
     {
         this._currentHealth = _currentHealth;
         this._animator = _animator;

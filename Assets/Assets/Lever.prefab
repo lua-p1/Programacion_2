@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 419443802238493518}
   - component: {fileID: 7970999053647140365}
   - component: {fileID: 6019338008669857496}
-  - component: {fileID: 9039573662690851651}
+  - component: {fileID: 2486520367452568765}
   m_Layer: 7
   m_Name: Stick
   m_TagString: Untagged
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!111 &9039573662690851651
+--- !u!111 &2486520367452568765
 Animation:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -277,7 +277,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

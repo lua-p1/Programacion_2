@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
     {
         if (GameManager.instance.player != null)
         {
-            var life = GameManager.instance.player.GetComponent<ThirdPersonInputs>().GetPlayerComponentLife;
+            var life = GameManager.instance.player.GetComponent<ThirdPersonInputsw>().GetPlayerComponentLife;
             if (life != null)
             {
                 life.TakeDamage(_damage);
