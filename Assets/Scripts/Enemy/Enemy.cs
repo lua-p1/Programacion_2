@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     }
     private void Update()
     {
-        print(LineOfSight.IsOnSight(this.transform.position, GameManager.instance.player.transform.position, _scenaryMask));
+        //print(LineOfSight.IsOnSight(this.transform.position, GameManager.instance.player.transform.position, _scenaryMask));
         _fsm.OnUpdate();
     }
     public float CheckPlayerDistance()

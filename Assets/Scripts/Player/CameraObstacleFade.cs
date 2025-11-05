@@ -22,7 +22,6 @@ public class CameraObstacleFade : MonoBehaviour
         {
             Renderer rend = hit.collider.GetComponent<Renderer>();
             if (rend == null) continue;
-
             currentHits.Add(rend);
             if (!_originalMaterials.ContainsKey(rend))
             {

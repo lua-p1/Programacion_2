@@ -1,26 +1,19 @@
 using UnityEngine;
 public class InputManager : MonoBehaviour
 {
+    public static InputManager Instance { get; private set; }
     private PlayerControls _playerControls;
-    public static InputManager instance;
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else
+        if (Instance != null && Instance != this)
+        {
             Destroy(gameObject);
-    }
-    private void OnEnable()
-    {
+            return;
+        }
+        Instance = this;
         _playerControls = new PlayerControls();
         _playerControls.Enable();
     }
-    public Vector2 GetMovement()
-    {
-        return _playerControls.PlayerMovements.Movement.ReadValue<Vector2>();
-    }
-    public Vector2 GetMouseMovement()
-    {
-        return _playerControls.PlayerMovements.MouseMovement.ReadValue<Vector2>();
-    }
+    public Vector2 Movement => _playerControls.PlayerMovements.Movement.ReadValue<Vector2>();
+    public Vector2 MouseMovement => _playerControls.PlayerMovements.MouseMovement.ReadValue<Vector2>();
 }

@@ -1,46 +1,23 @@
 using UnityEngine;
-public class Lever : MonoBehaviour
+public class Lever : MonoBehaviour, IInteractiveObject
 {
-    public Animator leverAnimator;
-    public Animator doorAnimator;
-    private bool isPlayerNear = false;
-    private bool isDoorOpen = false;
-
-    void Update()
+    private Animation _anim;
+    private bool _canPlay;
+    [SerializeField] private Door doorRef;
+    private void Start()
     {
-        if (isPlayerNear && Input.GetKeyDown(KeyCode.E))
-        {
-            ToggleDoor();
-        }
+        _canPlay = true;
+        //_anim = GetComponentInChild<Animation>();
     }
-    private void ToggleDoor()
+    public void InteractAction()
     {
-        if (isDoorOpen)
+        if (!_canPlay) return;
+        _anim.Play("LeverOff");
+        if (doorRef != null)
         {
-            leverAnimator.SetTrigger("Off");
-            doorAnimator.SetTrigger("Close");
-            isDoorOpen = false;
+            doorRef.OpenDoor();
         }
-        else
-        {
-            leverAnimator.SetTrigger("On");
-            doorAnimator.SetTrigger("Open");
-            isDoorOpen = true;
-        }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isPlayerNear = true;
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isPlayerNear = false;
-        }
+        _canPlay = false;
+        Debug.Log("¡Palanca activada!");
     }
 }
-
