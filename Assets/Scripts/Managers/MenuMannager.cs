@@ -8,7 +8,7 @@ public class MenuPrincipal : MonoBehaviour
     }
     public void Replay()
     {
-        SceneManager.LoadScene("LVL");
+        SceneManager.LoadScene("Lvl");
     }
     public void ShowControls(GameObject panelControles)
     {
