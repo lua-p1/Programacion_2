@@ -1494,7 +1494,7 @@ MonoBehaviour:
   _obstacleLayers:
     serializedVersion: 2
     m_Bits: 8
-  _extraRayDistance: 0
+  _minFadeDistance: 2
 --- !u!1 &333367877
 GameObject:
   m_ObjectHideFlags: 0
@@ -13312,30 +13312,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1277303973}
     m_Modifications:
-    - target: {fileID: 6259404969654739356, guid: 8c5e8e990cfb4aa4f87df3555c419d45,
-        type: 3}
-      propertyPath: m_UpdateMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7536632325426850160, guid: 8c5e8e990cfb4aa4f87df3555c419d45,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7536632325426850160, guid: 8c5e8e990cfb4aa4f87df3555c419d45,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.1022879
-      objectReference: {fileID: 0}
     - target: {fileID: 7536632325426850160, guid: 8c5e8e990cfb4aa4f87df3555c419d45,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.475216
+      value: 1.6747788
       objectReference: {fileID: 0}
     - target: {fileID: 7536632325426850160, guid: 8c5e8e990cfb4aa4f87df3555c419d45,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.053
+      value: -21.123
       objectReference: {fileID: 0}
     - target: {fileID: 7536632325426850160, guid: 8c5e8e990cfb4aa4f87df3555c419d45,
         type: 3}
@@ -13345,7 +13330,7 @@ PrefabInstance:
     - target: {fileID: 7536632325426850160, guid: 8c5e8e990cfb4aa4f87df3555c419d45,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -19.148
+      value: -19.434
       objectReference: {fileID: 0}
     - target: {fileID: 7536632325426850160, guid: 8c5e8e990cfb4aa4f87df3555c419d45,
         type: 3}
@@ -13382,13 +13367,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7826526412377420719, guid: 8c5e8e990cfb4aa4f87df3555c419d45,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.1858673
+      objectReference: {fileID: 0}
+    - target: {fileID: 7826526412377420719, guid: 8c5e8e990cfb4aa4f87df3555c419d45,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.655
+      objectReference: {fileID: 0}
     - target: {fileID: 9132056654987568010, guid: 8c5e8e990cfb4aa4f87df3555c419d45,
         type: 3}
       propertyPath: m_Name
       value: Door
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 293084318506013789, guid: 8c5e8e990cfb4aa4f87df3555c419d45, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c5e8e990cfb4aa4f87df3555c419d45, type: 3}
