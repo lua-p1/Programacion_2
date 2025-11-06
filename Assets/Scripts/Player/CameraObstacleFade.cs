@@ -6,7 +6,6 @@ public class CameraObstacleFade : MonoBehaviour
     [SerializeField] private Transform _player;
     [SerializeField] private float _fadeSpeed = 5f;
     [SerializeField] private LayerMask _obstacleLayers;
-    [SerializeField] private float _minFadeDistance = 2f;
     private List<Renderer> _fadedObjects = new List<Renderer>();
     private Dictionary<Renderer, List<Material>> _originalMaterials = new Dictionary<Renderer, List<Material>>();
     private void Update()
@@ -21,7 +20,6 @@ public class CameraObstacleFade : MonoBehaviour
         HashSet<Renderer> currentHits = new HashSet<Renderer>();
         foreach (var hit in hits)
         {
-            if (Vector3.Distance(transform.position, hit.point) < _minFadeDistance) continue;
             Renderer rend = hit.collider.GetComponent<Renderer>();
             if (rend == null) continue;
             currentHits.Add(rend);
