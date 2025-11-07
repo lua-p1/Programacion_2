@@ -1,17 +1,25 @@
 using UnityEngine;
 public class Door : MonoBehaviour
 {
-    private Animator _anim;
-    private bool _isOpen;
+    [SerializeField]private float _openAngle = 90f;
+    [SerializeField]private float _speed = 2f;
+    private bool _isOpen = false;
+    private Quaternion _closedRot;
+    private Quaternion _openRot;
     void Start()
     {
-        _isOpen = false;
-        _anim = GetComponent<Animator>();
+        _closedRot = transform.localRotation;
+        _openRot = Quaternion.Euler(transform.localEulerAngles + new Vector3(0f, _openAngle, 0f));
     }
-    public void OpenDoor()
+    void Update()
     {
-        if (_isOpen) return;
-        _anim.Play("DoorOpen");
-        _isOpen = true;
+        if (_isOpen)
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, _openRot, Time.deltaTime * _speed);
+        else
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, _closedRot, Time.deltaTime * _speed);
+    }
+    public void ToggleDoor()
+    {
+        _isOpen = !_isOpen;
     }
 }

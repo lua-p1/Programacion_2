@@ -1,13 +1,13 @@
 using UnityEngine;
 public class Lever : MonoBehaviour, IInteractiveObject
 {
-    private Animator _anim;
+    private Animation _anim;
     private bool _canPlay;
     [SerializeField] private Door doorRef;
     private void Start()
     {
         _canPlay = true;
-        _anim = GetComponentInChildren<Animator>();
+        _anim = GetComponentInChildren<Animation>();
     }
     public void InteractAction()
     {
@@ -15,7 +15,7 @@ public class Lever : MonoBehaviour, IInteractiveObject
         _anim.Play("LeverOff");
         if (doorRef != null)
         {
-            doorRef.OpenDoor();
+            doorRef.ToggleDoor();
         }
         _canPlay = false;
         Debug.Log("¡Palanca activada!");
