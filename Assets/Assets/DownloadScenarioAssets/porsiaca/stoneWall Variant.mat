@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2910941061242351489
+--- !u!114 &-8802795273143545485
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,9 +20,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: woodBeam
+  m_Name: stoneWall Variant
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_Parent: {fileID: 2100000, guid: ad527f2e19addae4990a6a73b0c3a8bf, type: 2}
+  m_Parent: {fileID: 2100000, guid: b845ea8a17a5b0e48b6ab75963e19c00, type: 2}
   m_ModifiedSerializedProperties: 16
   m_ValidKeywords:
   - _NORMALMAP
@@ -37,12 +37,21 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 094023370b030f74ba5ace446ebcff02, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 094023370b030f74ba5ace446ebcff02, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _Surface: 0
+    - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors: []
   m_BuildTextureStacks: []
