@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 375410710191791671}
   - component: {fileID: 3839300332022210349}
   - component: {fileID: 7969731546106612371}
+  - component: {fileID: 5457295019754830665}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -96,3 +97,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a325e9d09d1ac4740aa40ef5d340cdf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _openAngle: 90
+  _speed: 2
+--- !u!64 &5457295019754830665
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5345671097707159083}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5779197439840542771, guid: 814c8c7953f2b5646ab1e13645f7739f, type: 3}
