@@ -19,3 +19,4 @@ musica:
 -ambiental, sombrio, goteos quiza
 
 hacer un terrain y cambiar la skybox
+terminar el nivel
