@@ -7,7 +7,10 @@ clase 22/10/2025
 particulas
 
 clase 15/10/2025
-postprocesos
+postprocesos (inicio) y luces (también bakeo) 26:00
 
 clase 08/10/2025
-skyboxes y luces 51:50
+terrain (inicio), skyboxes 47:30 y luces 51:50
+
+clase 17/09/2025
+terrain 1:11:50
