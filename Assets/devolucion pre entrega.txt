@@ -1,0 +1,21 @@
+particulas:
+-cuando el player recibe daño: salpicaduras de sangre
+-antorcha, fuego y humo
+-particulas en el aire
+-chispas en el spiketrap
+
+luces: 
+-antorchas
+
+sonidos:
+-pasos player y monstruo
+-daño al player y muerte
+-ataque monstruo
+-chirrido spiketrap
+-al bajar la palanca
+
+musica:
+-menu
+-ambiental, sombrio, goteos quiza
+
+hacer un terrain y cambiar la skybox
