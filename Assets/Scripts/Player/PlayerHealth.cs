@@ -6,12 +6,14 @@ public class PlayerHealth
     private Animator _animator;
     private ThirdPersonInputsw _playerInputs;
     private Slider _healthSlider;
-    public PlayerHealth(float _currentHealth, Animator _animator, ThirdPersonInputsw _playerInputs, Slider _healthSlider)
+    private ParticleSystem _damageParticles;
+    public PlayerHealth(float _currentHealth, Animator _animator, ThirdPersonInputsw _playerInputs, Slider _healthSlider, ParticleSystem damageParticles)
     {
         this._currentHealth = _currentHealth;
         this._animator = _animator;
         this._playerInputs = _playerInputs;
         this._healthSlider = _healthSlider;
+        _damageParticles = damageParticles;
     }
     private void CheckHealth()
     {
@@ -25,10 +27,15 @@ public class PlayerHealth
         if(_currentHealth > 0)
         {
             _currentHealth -= damage;
+            
         }
         if (_healthSlider != null)
         {
             _healthSlider.value = _currentHealth;
+        }
+        if(_damageParticles != null)
+        {
+            _damageParticles.Play();
         }
         CheckHealth();
         Debug.Log(_currentHealth);
