@@ -37,6 +37,10 @@ public class PlayerHealth
         {
             _damageParticles.Play();
         }
+        if(_animator != null)
+        {
+            _animator.SetTrigger("OnHurt");
+        }
         CheckHealth();
         Debug.Log(_currentHealth);
     }
