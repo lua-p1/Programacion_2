@@ -3,7 +3,7 @@ public class Lever : MonoBehaviour, IInteractiveObject
 {
     private Animation _anim;
     private bool _canPlay;
-    [SerializeField] private Door doorRef;
+    [SerializeField]private Door _doorRef;
     private void Start()
     {
         _canPlay = true;
@@ -13,9 +13,9 @@ public class Lever : MonoBehaviour, IInteractiveObject
     {
         if (!_canPlay && _anim != null) return;
         _anim.Play("LeverOff");
-        if (doorRef != null)
+        if (_doorRef != null)
         {
-            doorRef.ToggleDoor();
+            _doorRef.ToggleDoor();
         }
         _canPlay = false;
         Debug.Log("¡Palanca activada!");
