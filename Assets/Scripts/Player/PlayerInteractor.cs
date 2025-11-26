@@ -1,6 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 public class PlayerInteractor : MonoBehaviour
 {
     [SerializeField]private float _interactionDistance = 3f;
