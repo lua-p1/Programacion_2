@@ -2,10 +2,9 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class AudioManager : MonoBehaviour
+public class AudioMixer : MonoBehaviour
 {
-    [SerializeField] AudioMixer mixer;
-    [SerializeField] private Slider _masterVolume;
+    [SerializeField] UnityEngine.Audio.AudioMixer mixer;
     [SerializeField] private Slider _soundVolume;
     [SerializeField] private Slider _musicVolume;
     private void Start()
