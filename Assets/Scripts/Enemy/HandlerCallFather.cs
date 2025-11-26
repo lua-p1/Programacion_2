@@ -12,6 +12,8 @@ public class HandlerCallFather : MonoBehaviour
     }
     public void OnWalk()
     {
-        AudioManager.Instance.PlaySound("enemyFootstep");
+        AudioManager.Instance.PlaySoundAtPosition("enemyFootstep", transform.position);
     }
+
+
 }

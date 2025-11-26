@@ -19,6 +19,6 @@ public class TrapBehavior : MonoBehaviour
     }
     public void OnRutine()
     {
-        AudioManager.Instance.PlaySound("electricSparks");
+        AudioManager.Instance.PlaySoundAtPosition("electricSparks", transform.position);
     }
 }
