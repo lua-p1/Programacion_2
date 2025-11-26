@@ -10,4 +10,8 @@ public class HandlerCallFather : MonoBehaviour
     {
         _enemy.Attack();
     }
+    public void OnWalk()
+    {
+        AudioManager.Instance.PlaySound("enemyFootstep");
+    }
 }

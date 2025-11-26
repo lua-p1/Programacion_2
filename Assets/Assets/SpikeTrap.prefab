@@ -9840,7 +9840,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
   _minDistanceToWaypoint: 0.5
   _speed: 7
 --- !u!1 &3308993687874094135

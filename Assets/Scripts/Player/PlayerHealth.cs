@@ -39,7 +39,6 @@ public class PlayerHealth
         if(_animator != null && _currentHealth > 0)
         {
             _animator.SetTrigger("OnHurt");
-            AudioManager.Instance.PlaySound("hurt_1");
         }
         CheckHealth();
         Debug.Log(_currentHealth);
@@ -51,7 +50,6 @@ public class PlayerHealth
             _healthSlider.value = 0;
         }
         _animator.SetBool("OnDeath", true);
-        AudioManager.Instance.PlaySound("hurt_3");
         _playerInputs.OnDeath();
     }
     public float GetLife { get => _currentHealth; }
