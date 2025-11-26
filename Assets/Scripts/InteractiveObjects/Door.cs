@@ -14,12 +14,17 @@ public class Door : MonoBehaviour
     void Update()
     {
         if (_isOpen)
+        {
             transform.localRotation = Quaternion.Slerp(transform.localRotation, _openRot, Time.deltaTime * _speed);
+        }
         else
+        {
             transform.localRotation = Quaternion.Slerp(transform.localRotation, _closedRot, Time.deltaTime * _speed);
+        }
     }
     public void ToggleDoor()
     {
+        AudioManager.Instance.PlaySoundAtPosition("door_open", transform.position);
         _isOpen = !_isOpen;
     }
 }

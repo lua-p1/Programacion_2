@@ -23,17 +23,11 @@ public class AudioManager : MonoBehaviour
         Instance = this;
         CreateInitialSources();
     }
-
-
-    // ------------------------------
-    //   INITIALIZATION
-    // ------------------------------
     private void CreateInitialSources()
     {
         for (int i = 0; i < initialSources; i++)
             CreateNewSource();
     }
-
     private AudioSourceController CreateNewSource()
     {
         GameObject obj = new GameObject("AudioSourceController");
@@ -41,14 +35,8 @@ public class AudioManager : MonoBehaviour
 
         AudioSourceController controller = obj.AddComponent<AudioSourceController>();
         sources.Add(controller);
-
         return controller;
     }
-
-
-    // ------------------------------
-    //   PUBLIC METHODS
-    // ------------------------------
     public void PlaySound(string soundName)
     {
         AudioClip clip = FindAudio(soundName);
@@ -57,11 +45,9 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning($"Audio '{soundName}' no encontrado.");
             return;
         }
-
         AudioSourceController source = GetAvailableSource();
         source.PlayClip(clip, masterVolume, Random.Range(minPitch, maxPitch));
     }
-
     public void PlaySoundAtPosition(string soundName, Vector3 position)
     {
         AudioClip clip = FindAudio(soundName);
@@ -74,11 +60,6 @@ public class AudioManager : MonoBehaviour
         AudioSourceController source = GetAvailableSource();
         source.PlayClipAtPosition(clip, position, masterVolume, Random.Range(minPitch, maxPitch));
     }
-
-
-    // ------------------------------
-    //   INTERNAL METHODS
-    // ------------------------------
     private AudioSourceController GetAvailableSource()
     {
         foreach (AudioSourceController src in sources)
@@ -86,7 +67,6 @@ public class AudioManager : MonoBehaviour
 
         return CreateNewSource();
     }
-
     public AudioClip FindAudio(string soundName)
     {
         foreach (AudioClip clip in clips)

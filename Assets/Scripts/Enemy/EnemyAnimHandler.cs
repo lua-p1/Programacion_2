@@ -1,5 +1,5 @@
 using UnityEngine;
-public class HandlerCallFather : MonoBehaviour
+public class EnemyAnimHandler : MonoBehaviour
 {
     private Enemy _enemy;
     private void Start()
@@ -14,6 +14,4 @@ public class HandlerCallFather : MonoBehaviour
     {
         AudioManager.Instance.PlaySoundAtPosition("enemyFootstep", transform.position);
     }
-
-
 }
