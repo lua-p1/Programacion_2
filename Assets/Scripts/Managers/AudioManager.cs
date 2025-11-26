@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour
         if (clip != null)
         {
             speaker.PlayOneShot(clip);
+            Debug.Log(clip.name);
         }
         else
         {
