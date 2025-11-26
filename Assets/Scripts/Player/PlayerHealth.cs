@@ -27,13 +27,13 @@ public class PlayerHealth
         if(_currentHealth > 0)
         {
             _currentHealth -= damage;
-            
         }
         if (_healthSlider != null)
         {
             _healthSlider.value = _currentHealth;
+            AudioManager.Instance.PlaySound("hurt_3");
         }
-        if(_damageParticles != null)
+        if (_damageParticles != null)
         {
             _damageParticles.Play();
         }
@@ -50,6 +50,7 @@ public class PlayerHealth
         {
             _healthSlider.value = 0;
         }
+        AudioManager.Instance.PlaySound("hurt_1");
         _animator.SetBool("OnDeath", true);
         _playerInputs.OnDeath();
     }

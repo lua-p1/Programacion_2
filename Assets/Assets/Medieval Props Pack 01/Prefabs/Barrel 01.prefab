@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 2619049597730059557}
   - component: {fileID: 6578511231093276361}
   - component: {fileID: 2487456462568837699}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Barrel_Wood_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2619049597730059557
 Transform:
@@ -93,12 +93,12 @@ GameObject:
   m_Component:
   - component: {fileID: -8679921383154817045}
   - component: {fileID: 7239841210115026131}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Barrel 01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &-8679921383154817045
 Transform:
@@ -150,12 +150,12 @@ GameObject:
   - component: {fileID: -5978669628179024927}
   - component: {fileID: 2702308472520197170}
   - component: {fileID: -709020944619608040}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Barrel_Irons_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &-5978669628179024927
 Transform:
