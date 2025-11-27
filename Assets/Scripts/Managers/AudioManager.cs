@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
+    public AudioSource musicSource;
 
     [Header("Clips Disponibles")]
     public AudioClip[] clips;
@@ -22,6 +23,11 @@ public class AudioManager : MonoBehaviour
     {
         Instance = this;
         CreateInitialSources();
+        if (musicSource != null && !musicSource.isPlaying)
+        {
+            musicSource.Play();
+        }
+
     }
     private void CreateInitialSources()
     {

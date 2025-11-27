@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.Audio;
 public class AudioSourceController : MonoBehaviour
 {
     private AudioSource source;
+    public AudioMixerGroup outputMixerGroup;
     public bool IsPlaying => source.isPlaying;
     private void Awake()
     {
@@ -10,7 +12,11 @@ public class AudioSourceController : MonoBehaviour
         source.spatialBlend = 1f;
         source.rolloffMode = AudioRolloffMode.Linear;
         source.minDistance = 1f;
-        source.maxDistance = 20f;
+        source.maxDistance = 20f; 
+        if (outputMixerGroup != null)
+        {
+            source.outputAudioMixerGroup = outputMixerGroup;
+        }
     }
     public void PlayClip(AudioClip clip, float volume, float pitch)
     {
