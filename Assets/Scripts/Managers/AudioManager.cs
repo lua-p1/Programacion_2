@@ -1,34 +1,84 @@
 using UnityEngine;
+using System.Collections.Generic;
+
 public class AudioManager : MonoBehaviour
 {
-    public AudioClip[] clips;
-    public AudioSource speaker;
     public static AudioManager Instance;
+    public AudioSource musicSource;
+
+    [Header("Clips Disponibles")]
+    public AudioClip[] clips;
+
+    [Header("Ajustes Globales")]
+    [Range(0f, 1f)] public float masterVolume = 1f;
+    public float minPitch = 0.95f;
+    public float maxPitch = 1.05f;
+
+    [Header("Pool Settings")]
+    public int initialSources = 10;
+
+    private List<AudioSourceController> sources = new List<AudioSourceController>();
+
     private void Awake()
     {
         Instance = this;
+        CreateInitialSources();
+        if (musicSource != null && !musicSource.isPlaying)
+        {
+            musicSource.Play();
+        }
+
+    }
+    private void CreateInitialSources()
+    {
+        for (int i = 0; i < initialSources; i++)
+            CreateNewSource();
+    }
+    private AudioSourceController CreateNewSource()
+    {
+        GameObject obj = new GameObject("AudioSourceController");
+        obj.transform.parent = this.transform;
+
+        AudioSourceController controller = obj.AddComponent<AudioSourceController>();
+        sources.Add(controller);
+        return controller;
     }
     public void PlaySound(string soundName)
     {
         AudioClip clip = FindAudio(soundName);
-        if (clip != null)
+        if (clip == null)
         {
-            speaker.PlayOneShot(clip);
+            Debug.LogWarning($"Audio '{soundName}' no encontrado.");
+            return;
         }
-        else
+        AudioSourceController source = GetAvailableSource();
+        source.PlayClip(clip, masterVolume, Random.Range(minPitch, maxPitch));
+    }
+    public void PlaySoundAtPosition(string soundName, Vector3 position)
+    {
+        AudioClip clip = FindAudio(soundName);
+        if (clip == null)
         {
-            Debug.LogWarning($"{soundName} no esta en lista");
+            Debug.LogWarning($"Audio '{soundName}' no encontrado.");
+            return;
         }
+
+        AudioSourceController source = GetAvailableSource();
+        source.PlayClipAtPosition(clip, position, masterVolume, Random.Range(minPitch, maxPitch));
+    }
+    private AudioSourceController GetAvailableSource()
+    {
+        foreach (AudioSourceController src in sources)
+            if (!src.IsPlaying) return src;
+
+        return CreateNewSource();
     }
     public AudioClip FindAudio(string soundName)
     {
-        for (int i = 0; i < clips.Length; i++)
-        {
-            if (clips[i].name==soundName)
-            {
-                return clips[i];
-            }
-        }
+        foreach (AudioClip clip in clips)
+            if (clip.name == soundName)
+                return clip;
+
         return null;
     }
 }

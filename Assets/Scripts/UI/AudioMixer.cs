@@ -1,24 +1,37 @@
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
-public class AudioMixer : MonoBehaviour
+public class AudioSourceController : MonoBehaviour
 {
-    [SerializeField] UnityEngine.Audio.AudioMixer mixer;
-    [SerializeField] private Slider _soundVolume;
-    [SerializeField] private Slider _musicVolume;
-    private void Start()
+    private AudioSource source;
+    public AudioMixerGroup outputMixerGroup;
+    public bool IsPlaying => source.isPlaying;
+    private void Awake()
     {
-        float _sfxMusic = PlayerPrefs.GetFloat("Music", -23f);
-        _musicVolume.value = _sfxMusic;
-        float _sfxSound = PlayerPrefs.GetFloat("Sound", -23f);
-        _soundVolume.value = _sfxSound;
+        source = gameObject.AddComponent<AudioSource>();
+        source.playOnAwake = false;
+        source.spatialBlend = 1f;
+        source.rolloffMode = AudioRolloffMode.Linear;
+        source.minDistance = 1f;
+        source.maxDistance = 20f; 
+        if (outputMixerGroup != null)
+        {
+            source.outputAudioMixerGroup = outputMixerGroup;
+        }
     }
-    public void SetMusicVolume(float value)
+    public void PlayClip(AudioClip clip, float volume, float pitch)
     {
-        mixer.SetFloat("Music",value);
+        transform.position = Camera.main.transform.position;
+        ConfigureAndPlay(clip, volume, pitch);
     }
-    public void SetSoundVolume(float value)
+    public void PlayClipAtPosition(AudioClip clip, Vector3 position, float volume, float pitch)
     {
-        mixer.SetFloat("Sound", value);
+        transform.position = position;
+        ConfigureAndPlay(clip, volume, pitch);
+    }
+    private void ConfigureAndPlay(AudioClip clip, float volume, float pitch)
+    {
+        source.pitch = pitch;
+        source.volume = volume;
+        source.PlayOneShot(clip);
     }
 }

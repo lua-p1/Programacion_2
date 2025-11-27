@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9120309477846129496}
   - component: {fileID: 4793531850403849250}
-  - component: {fileID: 1758434058204827581}
+  - component: {fileID: 2076762844903504328}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -48,17 +48,18 @@ MonoBehaviour:
   clips:
   - {fileID: 8300000, guid: ab0fc1ad167d17b4f87d1b10ea76a395, type: 3}
   - {fileID: 8300000, guid: 1a47e854f20a92f47bd87dcfe730a649, type: 3}
-  - {fileID: 8300000, guid: e37c94af9977d1a43b2ac672f5db81a8, type: 3}
+  - {fileID: 8300000, guid: d9ce47f031af97842848d8573c7a593e, type: 3}
   - {fileID: 8300000, guid: 740991af79f136140affa2c08a893693, type: 3}
-  - {fileID: 8300000, guid: 8f5f5c758c74c5d41acf53c0f4bcf2f8, type: 3}
-  - {fileID: 8300000, guid: 37789fc533b187d4eafd5657f90ab60e, type: 3}
+  - {fileID: 8300000, guid: 2514600bf22811644b07f168a09e33ff, type: 3}
   - {fileID: 8300000, guid: 79b5dd87dd11f2b499d2f63e5ab5901c, type: 3}
   - {fileID: 8300000, guid: bd114ae6abb3d5647b10b2d30fd2e1a5, type: 3}
   - {fileID: 8300000, guid: 6fe7230886be0714b8e20c2fe48dcebc, type: 3}
   - {fileID: 8300000, guid: a36fe9fab0cb54143a0f3ba2056d0894, type: 3}
-  - {fileID: 8300000, guid: 3b4f17172cab3814e874e24c5d93495b, type: 3}
-  speaker: {fileID: 1758434058204827581}
---- !u!82 &1758434058204827581
+  masterVolume: 1
+  minPitch: 0.95
+  maxPitch: 1.05
+  initialSources: 10
+--- !u!82 &2076762844903504328
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -67,7 +68,7 @@ AudioSource:
   m_GameObject: {fileID: 8180936760761649951}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 5446714268388095982, guid: d2fe74650a9e8b34b8296fb677c7f2f2,
+  OutputAudioMixerGroup: {fileID: -2977912576007266176, guid: d2fe74650a9e8b34b8296fb677c7f2f2,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 3b4f17172cab3814e874e24c5d93495b, type: 3}
   m_PlayOnAwake: 1
@@ -77,7 +78,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 180
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -145,7 +146,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
