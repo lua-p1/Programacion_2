@@ -5,34 +5,42 @@ public class VolumeSettings : MonoBehaviour
 {
     [Header("Mixer")]
     public AudioMixer audioMixer;
-
     [Header("Sliders")]
     public Slider masterSlider;
     public Slider musicSlider;
     public Slider sfxSlider;
-
     private void Start()
     {
-        masterSlider.value = PlayerPrefs.GetFloat("Master", 1f);
-        musicSlider.value = PlayerPrefs.GetFloat("Music", 1f);
-        sfxSlider.value = PlayerPrefs.GetFloat("Sound", 1f);
-
-        SetMusicVolume(musicSlider.value);
-        SetSFXVolume(sfxSlider.value);
+        float master = PlayerPrefs.GetFloat("Master", 1f);
+        float music = PlayerPrefs.GetFloat("Music", 1f);
+        float sfx = PlayerPrefs.GetFloat("Sound", 1f);
+        masterSlider.value = master;
+        musicSlider.value = music;
+        sfxSlider.value = sfx;
+        SetMasterVolume(master);
+        SetMusicVolume(music);
+        SetSFXVolume(sfx);
     }
     public void SetMasterVolume(float value)
     {
-        audioMixer.SetFloat("Master", Mathf.Log10(value) * 20);
+        float volume = Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20;
+        audioMixer.SetFloat("Master", volume);
         PlayerPrefs.SetFloat("Master", value);
     }
     public void SetMusicVolume(float value)
     {
-        audioMixer.SetFloat("Music", Mathf.Log10(value) * 20);
+        float volume = Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20;
+        audioMixer.SetFloat("Music", volume);
         PlayerPrefs.SetFloat("Music", value);
+        if (AudioManager.Instance != null && AudioManager.Instance.musicSource != null)
+            AudioManager.Instance.musicSource.volume = value;
     }
     public void SetSFXVolume(float value)
     {
-        audioMixer.SetFloat("Sound", Mathf.Log10(value) * 20);
+        float volume = Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20;
+        audioMixer.SetFloat("Sound", volume);
         PlayerPrefs.SetFloat("Sound", value);
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.masterVolume = value;
     }
 }

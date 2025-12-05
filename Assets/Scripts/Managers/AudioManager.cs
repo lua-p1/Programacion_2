@@ -1,33 +1,38 @@
 using UnityEngine;
 using System.Collections.Generic;
-
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
+    [Header("Music")]
     public AudioSource musicSource;
-
     [Header("Clips Disponibles")]
     public AudioClip[] clips;
-
     [Header("Ajustes Globales")]
     [Range(0f, 1f)] public float masterVolume = 1f;
     public float minPitch = 0.95f;
     public float maxPitch = 1.05f;
-
     [Header("Pool Settings")]
     public int initialSources = 10;
-
-    private List<AudioSourceController> sources = new List<AudioSourceController>();
-
+    private List<AudioSourceController> _sources = new List<AudioSourceController>();
     private void Awake()
     {
-        Instance = this;
-        CreateInitialSources();
-        if (musicSource != null && !musicSource.isPlaying)
+        if (Instance == null)
         {
-            musicSource.Play();
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+        CreateInitialSources();
+        masterVolume = PlayerPrefs.GetFloat("Master", 1f);
+        float musicVolume = PlayerPrefs.GetFloat("Music", 1f);
+        if (musicSource != null)
+            musicSource.volume = musicVolume;
+        if (musicSource != null && !musicSource.isPlaying)
+            musicSource.Play();
     }
     private void CreateInitialSources()
     {
@@ -38,9 +43,8 @@ public class AudioManager : MonoBehaviour
     {
         GameObject obj = new GameObject("AudioSourceController");
         obj.transform.parent = this.transform;
-
         AudioSourceController controller = obj.AddComponent<AudioSourceController>();
-        sources.Add(controller);
+        _sources.Add(controller);
         return controller;
     }
     public void PlaySound(string soundName)
@@ -62,13 +66,12 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning($"Audio '{soundName}' no encontrado.");
             return;
         }
-
         AudioSourceController source = GetAvailableSource();
         source.PlayClipAtPosition(clip, position, masterVolume, Random.Range(minPitch, maxPitch));
     }
     private AudioSourceController GetAvailableSource()
     {
-        foreach (AudioSourceController src in sources)
+        foreach (AudioSourceController src in _sources)
             if (!src.IsPlaying) return src;
 
         return CreateNewSource();
@@ -78,7 +81,6 @@ public class AudioManager : MonoBehaviour
         foreach (AudioClip clip in clips)
             if (clip.name == soundName)
                 return clip;
-
         return null;
     }
 }
