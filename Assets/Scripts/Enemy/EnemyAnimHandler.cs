@@ -8,11 +8,11 @@ public class EnemyAnimHandler : MonoBehaviour
     }
     public void Attack()
     {
-        AudioManager.Instance.PlaySoundAtPosition("enemySlash", transform.position);
+        //AudioManager.Instance.PlaySoundAtPosition("enemySlash", transform.position);
         _enemy.Attack();
     }
     public void OnWalk()
     {
-        AudioManager.Instance.PlaySoundAtPosition("enemyFootstep", transform.position);
+        //AudioManager.Instance.PlaySoundAtPosition("enemyFootstep", transform.position);
     }
 }
