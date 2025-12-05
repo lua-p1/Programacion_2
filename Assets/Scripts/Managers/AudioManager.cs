@@ -36,6 +36,15 @@ public class AudioManager : MonoBehaviour
         ApplyMixerVolumes();
         CreatePool();
     }
+    private void Start()
+    {
+        // Reproducir música automáticamente si hay clip
+        if (musicSource.clip != null && !musicSource.isPlaying)
+        {
+            musicSource.loop = true;
+            musicSource.Play();
+        }
+    }
 
     // ----------------------------------------------------
     // POOLING

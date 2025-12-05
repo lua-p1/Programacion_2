@@ -24,7 +24,7 @@ public class Door : MonoBehaviour
     }
     public void ToggleDoor()
     {
-        //AudioManager.Instance.PlaySoundAtPosition("door_open", transform.position);
+        AudioManager.Instance.PlaySFX("door_open", transform.position);
         _isOpen = !_isOpen;
     }
 }

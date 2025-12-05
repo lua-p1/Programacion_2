@@ -9,14 +9,20 @@ public class VolumeSliders : MonoBehaviour
 
     private void Start()
     {
-        // Cargar valores guardados en los sliders
+        // Bloquear temporalmente los eventos
+        masterSlider.onValueChanged.RemoveAllListeners();
+        musicSlider.onValueChanged.RemoveAllListeners();
+        sfxSlider.onValueChanged.RemoveAllListeners();
+
+        // Inicializar valores
         masterSlider.value = AudioManager.Instance.masterVolume;
         musicSlider.value = AudioManager.Instance.musicVolume;
         sfxSlider.value = AudioManager.Instance.sfxVolume;
 
-        // Suscripción a cambios
+        // Volver a suscribir los listeners
         masterSlider.onValueChanged.AddListener(AudioManager.Instance.SetMasterVolume);
         musicSlider.onValueChanged.AddListener(AudioManager.Instance.SetMusicVolume);
         sfxSlider.onValueChanged.AddListener(AudioManager.Instance.SetSFXVolume);
     }
+
 }

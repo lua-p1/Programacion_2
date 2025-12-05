@@ -18,7 +18,7 @@ public class Lever : MonoBehaviour, IInteractiveObject
             _doorRef.ToggleDoor();
         }
         _canPlay = false;
-        //AudioManager.Instance.PlaySoundAtPosition("lever", transform.position);
+        AudioManager.Instance.PlaySFX("lever", transform.position);
         Debug.Log("¡Palanca activada!");
     }
 }

@@ -7,15 +7,15 @@ public class AnimationEventHandler : MonoBehaviour
     }
     public void FootstepEvent()
     {
-        //AudioManager.Instance.PlaySound("footstepFast");
+      AudioManager.Instance.PlaySFX("footstepFast", transform.position);
     }
     public void OnHurtEvent()
     {
         int n = Random.Range(1, 4);
-        //AudioManager.Instance.PlaySound($"hurt_{n}");
+      AudioManager.Instance.PlaySFX($"hurt_{n}", transform.position);
     }
     public void OnDeathEvent()
     {
-      //  AudioManager.Instance.PlaySound("hurt_1");
+      AudioManager.Instance.PlaySFX("hurt_1", transform.position);
     }
 }
