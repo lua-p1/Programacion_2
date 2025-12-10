@@ -32,8 +32,6 @@ public class VolumeSettings : MonoBehaviour
         float volume = Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20;
         audioMixer.SetFloat("Music", volume);
         PlayerPrefs.SetFloat("Music", value);
-        if (AudioManager.Instance != null && AudioManager.Instance.musicSource != null)
-            AudioManager.Instance.musicSource.volume = value;
     }
     public void SetSFXVolume(float value)
     {
