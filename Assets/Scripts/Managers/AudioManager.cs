@@ -1,10 +1,13 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Audio;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
     [Header("Music")]
     public AudioSource musicSource;
+    [Header("SFX")]
+    public AudioMixerGroup sfxGroup;
     [Header("Clips Disponibles")]
     public AudioClip[] clips;
     [Header("Ajustes Globales")]
@@ -44,6 +47,8 @@ public class AudioManager : MonoBehaviour
         GameObject obj = new GameObject("AudioSourceController");
         obj.transform.parent = this.transform;
         AudioSourceController controller = obj.AddComponent<AudioSourceController>();
+        AudioSource audioSource = controller.GetComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = sfxGroup;
         _sources.Add(controller);
         return controller;
     }
