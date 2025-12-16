@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-public class ThirdPersonInputsw : MonoBehaviour
+public class ThirdPersonInputs : MonoBehaviour
 {
     [SerializeField]private float sensibilidadX;
     [SerializeField]private float timeToRotate;
@@ -38,6 +38,11 @@ public class ThirdPersonInputsw : MonoBehaviour
         _animator.SetFloat("MovementX", _getInputs.x);
         _animator.SetFloat("MovementY", _getInputs.y);
         _animator.SetBool("Walk", _getInputs != Vector2.zero);
+        bool isMoving = _getInputs != Vector2.zero;
+        if (isMoving && PlayerNoiseEmitter.Instance.CanEmitNoise())
+        {
+            PlayerNoiseEmitter.Instance.EmitWalkNoise();
+        }
     }
     public void OnDeath()
     {
