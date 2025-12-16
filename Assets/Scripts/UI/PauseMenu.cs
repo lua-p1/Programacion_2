@@ -6,11 +6,6 @@ public class PauseMenu : MonoBehaviour
     public GameObject pausePanel;       
     public GameObject volumePanel;   
     private bool isPaused = false;
-    private void Start()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
@@ -23,6 +18,8 @@ public class PauseMenu : MonoBehaviour
     }
     public void PauseGame()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         pausePanel.SetActive(true);
         volumePanel.SetActive(false);
         Time.timeScale = 0f;
@@ -34,6 +31,8 @@ public class PauseMenu : MonoBehaviour
         volumePanel.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     public void OpenOptions()
     {
