@@ -93,7 +93,6 @@ public class SoundHunter : MonoBehaviour
         if (distanceToPlayer <= attackRange)
         {
             agent.isStopped = true;
-            _enemy.Attack();
         }
     }
     private void OnDrawGizmos()

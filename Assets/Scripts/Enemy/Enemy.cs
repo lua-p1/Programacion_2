@@ -65,5 +65,7 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.blue;
         if (GameManager.instance.player != null) return;
         Gizmos.DrawLine(transform.position, GameManager.instance.player.transform.position);
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, _attackRange);
     }
 }
