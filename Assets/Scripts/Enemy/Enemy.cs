@@ -5,6 +5,9 @@ public class Enemy : MonoBehaviour
 {
     private Animator _animator;
     private FSM _fsm;
+    public bool useFSM = true;
+    [SerializeField] private float attackCooldown = 1f;
+    private float lastAttackTime;
     [SerializeField]private float _visionRange;
     [Header("Chase")]
     [SerializeField]private NavMeshAgent _navMeshAgent;
@@ -18,6 +21,7 @@ public class Enemy : MonoBehaviour
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponentInChildren<Animator>();
+        if (!useFSM) return;
         _fsm = new FSM();
         _fsm.AddState(FSM.State.Chase, new ChaseState(_visionRange, _navMeshAgent, _attackRange, _scenaryMask, _animator, this, _fsm));
         _fsm.AddState(FSM.State.Patrol, new PatrolState(_visionRange, _navMeshAgent, wayPoints, _minDistanceToWaypoint, _scenaryMask, _animator,this,_fsm));
@@ -26,7 +30,8 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         //print(LineOfSight.IsOnSight(this.transform.position, GameManager.instance.player.transform.position, _scenaryMask));
-        _fsm.OnUpdate();
+            if (!useFSM) return;
+            _fsm.OnUpdate();
     }
     public float CheckPlayerDistance()
     {
@@ -35,19 +40,24 @@ public class Enemy : MonoBehaviour
     }
     public void Attack()
     {
+        if (Time.time < lastAttackTime + attackCooldown) return;
+        lastAttackTime = Time.time;
+
         if (GameManager.instance.player != null)
         {
-            var life = GameManager.instance.player.GetComponent<ThirdPersonInputs>().GetPlayerComponentLife;
+            var life = GameManager.instance.player
+                .GetComponent<ThirdPersonInputs>()
+                .GetPlayerComponentLife;
+
             if (life != null)
-            {
                 life.TakeDamage(_damage);
-            }
-            else
+        }
+        else
             {
                 Debug.LogError("No se encontro el componente PlayerHealth en el jugador");
             }
         }
-    }
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

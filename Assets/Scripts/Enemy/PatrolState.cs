@@ -30,7 +30,6 @@ public class PatrolState : IState
         _animator.SetBool("EnemyIsWalking", true);
         SetRandomDestination();
     }
-
     public void OnExit()
     {
         Debug.Log("Exit Patrol State");
@@ -39,12 +38,10 @@ public class PatrolState : IState
     {
         if (_enemy.CheckPlayerDistance() <= _visionRange && LineOfSight.IsOnSight(_enemy.transform.position, GameManager.instance.player.transform.position, _scenaryMask))
         {
-            //Debug.Log("veo al PJ");
             _fsm.ChangeState(FSM.State.Chase);
         }
         else
         {
-            //Debug.Log("No veo al PJ");
             CheckAndMove();
         }
     }

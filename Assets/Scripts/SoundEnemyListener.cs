@@ -14,8 +14,16 @@ public class SoundEnemyListener : MonoBehaviour
     }
     public void OnHearSound(Vector3 soundPosition)
     {
+        if (!agent.enabled) return;
+
+        if (!agent.isOnNavMesh)
+        {
+            TryPlaceOnNavMesh();
+            return;
+        }
         lastSoundPosition = soundPosition;
         hasSoundTarget = true;
+        agent.isStopped = false;
         agent.SetDestination(soundPosition);
     }
     private void Update()
@@ -33,4 +41,13 @@ public class SoundEnemyListener : MonoBehaviour
             agent.SetDestination(lastSoundPosition);
         }
     }
+    void TryPlaceOnNavMesh()
+    {
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(transform.position, out hit, 2f, NavMesh.AllAreas))
+        {
+            agent.Warp(hit.position);
+        }
+    }
+
 }
