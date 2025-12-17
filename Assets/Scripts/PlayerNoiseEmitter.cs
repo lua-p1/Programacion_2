@@ -14,7 +14,7 @@ public class PlayerNoiseEmitter : MonoBehaviour
         Collider[] hits = Physics.OverlapSphere(transform.position, walkNoiseRadius);
         foreach (var hit in hits)
         {
-            if (hit.TryGetComponent(out SoundEnemyListener listener))
+            if (hit.TryGetComponent(out SoundHunter listener))
             {
                 listener.OnHearSound(transform.position);
             }
@@ -33,5 +33,6 @@ public class PlayerNoiseEmitter : MonoBehaviour
         }
         return false;
     }
+
 }
 
