@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 3675335631310310680}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 517, y: -0.003, z: -284.553}
+  m_LocalPosition: {x: 517, y: -0.003, z: -284.559}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -53,10 +53,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.19511414
-  m_Height: 0.5153893
+  m_Radius: 0.07246399
+  m_Height: 0.18594348
   m_Direction: 1
-  m_Center: {x: 0, y: 2.0603566, z: 0.00090026855}
+  m_Center: {x: 0, y: 2.0619273, z: -0.0037384033}
 --- !u!114 &4749421816468898298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,12 +71,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 7167703657609928921}
   hearingRange: 10
-  noiseThreshold: 1
-  _retreatHeight: 5
+  noiseThreshold: 1.5
+  _retreatHeight: 1
   _retreatSpeed: 6
-  _diveSpeed: 10
-  _attackRange: 1.2
-  _damage: 10
+  _diveSpeed: 6
+  _attackRange: 0
+  _damage: 1
 --- !u!1001 &8830208359590104989
 PrefabInstance:
   m_ObjectHideFlags: 0

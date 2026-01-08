@@ -1185,6 +1185,11 @@ MonoBehaviour:
   _initHealth: 100
   _healthSlider: {fileID: 0}
   _damageParticles: {fileID: 0}
+  _currentNoise: 0
+  _minWalkNoise: 1
+  _maxWalkNoise: 2
+  _noiseBuildUpSpeed: 0.1
+  _noiseDecaySpeed: 0.5
 --- !u!114 &7587334912974517191
 MonoBehaviour:
   m_ObjectHideFlags: 0

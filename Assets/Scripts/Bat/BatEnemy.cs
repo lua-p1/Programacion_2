@@ -42,16 +42,12 @@ public class BatEnemy : MonoBehaviour
     public void SetRetreatPoint()
     {
         // Punto arriba del murciélago (techo / oscuridad)
-        _retreatPoint = transform.position + Vector3.up * _retreatHeight;
-        //_retreatPoint = transform.position +Vector3.up * _retreatHeight + transform.forward * Random.Range(-2f, 2f);
+       // _retreatPoint = transform.position + Vector3.up * _retreatHeight;
+        _retreatPoint = transform.position + Vector3.up * _retreatHeight + transform.forward * Random.Range(-2f, 2f);
     }
     public void MoveToRetreat()
     {
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            _retreatPoint,
-            _retreatSpeed * Time.deltaTime
-        );
+        transform.position = Vector3.MoveTowards(transform.position,_retreatPoint,_retreatSpeed * Time.deltaTime);
     }
     public bool AtRetreatPoint()
     {
@@ -60,14 +56,10 @@ public class BatEnemy : MonoBehaviour
     public void DiveTowardsPlayer()
     {
         if (GameManager.instance.player == null) return;
-
         _attackPoint = GameManager.instance.player.transform.position;
-
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            _attackPoint,
-            _diveSpeed * Time.deltaTime
-        );
+        _attackPoint.y = 0.40f;
+        Debug.Log(_attackPoint);
+        transform.position = Vector3.MoveTowards(transform.position,_attackPoint,_diveSpeed * Time.deltaTime);
     }
     public bool HasReachedAttackPoint()
     {
@@ -76,17 +68,10 @@ public class BatEnemy : MonoBehaviour
     public void Attack()
     {
         if (GameManager.instance.player == null) return;
-
-        float distance = Vector3.Distance(
-            transform.position,
-            GameManager.instance.player.transform.position
-        );
-
+        float distance = Vector3.Distance(transform.position,GameManager.instance.player.transform.position);
         if (distance <= _attackRange)
         {
-            var life = GameManager.instance.player
-                .GetComponent<ThirdPersonInputs>()
-                .GetPlayerComponentLife;
+            var life = GameManager.instance.player.GetComponent<ThirdPersonInputs>().GetPlayerComponentLife;
             life.TakeDamage(_damage);
         }
 
