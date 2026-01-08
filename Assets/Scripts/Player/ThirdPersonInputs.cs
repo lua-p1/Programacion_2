@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-public class ThirdPersonInputsw : MonoBehaviour
+public class ThirdPersonInputs : MonoBehaviour
 {
     [SerializeField]private float sensibilidadX;
     [SerializeField]private float timeToRotate;
@@ -14,6 +14,12 @@ public class ThirdPersonInputsw : MonoBehaviour
     private bool _isDead = false;
     private float currentYRotation = 0f;
     private Rigidbody _rb;
+    [Header("Noise")]
+    [SerializeField] private float _currentNoise;
+    [SerializeField] private float _walkNoise = 1f;
+    [SerializeField] private float _idleNoise = 0f;
+    [SerializeField] private float _noiseDecaySpeed = 2f;
+    public float CurrentNoise => _currentNoise;
     void Start()
     {
         Cursor.visible = false;
@@ -38,6 +44,14 @@ public class ThirdPersonInputsw : MonoBehaviour
         _animator.SetFloat("MovementX", _getInputs.x);
         _animator.SetFloat("MovementY", _getInputs.y);
         _animator.SetBool("Walk", _getInputs != Vector2.zero);
+        if (_getInputs != Vector2.zero)
+        {
+            _currentNoise = Mathf.Lerp(_currentNoise,_walkNoise,Time.deltaTime * 5f);
+        }
+        else
+        {
+            _currentNoise = Mathf.Lerp(_currentNoise,_idleNoise,Time.deltaTime * _noiseDecaySpeed);
+        }
     }
     public void OnDeath()
     {

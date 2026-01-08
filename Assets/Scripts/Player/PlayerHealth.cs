@@ -4,10 +4,10 @@ public class PlayerHealth
 {
     private float _currentHealth;
     private Animator _animator;
-    private ThirdPersonInputsw _playerInputs;
+    private ThirdPersonInputs _playerInputs;
     private Slider _healthSlider;
     private ParticleSystem _damageParticles;
-    public PlayerHealth(float _currentHealth, Animator _animator, ThirdPersonInputsw _playerInputs, Slider _healthSlider, ParticleSystem damageParticles)
+    public PlayerHealth(float _currentHealth, Animator _animator, ThirdPersonInputs _playerInputs, Slider _healthSlider, ParticleSystem damageParticles)
     {
         this._currentHealth = _currentHealth;
         this._animator = _animator;

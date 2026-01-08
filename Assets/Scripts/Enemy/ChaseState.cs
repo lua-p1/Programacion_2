@@ -33,7 +33,7 @@ public class ChaseState : IState
     private void Follow()
     {
         if (GameManager.instance.player == null) return;
-        var playerHealth = GameManager.instance.player.GetComponent<ThirdPersonInputsw>().GetPlayerComponentLife;
+        var playerHealth = GameManager.instance.player.GetComponent<ThirdPersonInputs>().GetPlayerComponentLife;
         if (playerHealth.GetLife <= 0)
         {
             _animator.SetBool("EnemyIsAttacking", false);
