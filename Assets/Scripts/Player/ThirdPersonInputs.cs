@@ -46,11 +46,11 @@ public class ThirdPersonInputs : MonoBehaviour
         _animator.SetBool("Walk", _getInputs != Vector2.zero);
         if (_getInputs != Vector2.zero)
         {
-            _currentNoise = Mathf.Lerp(_currentNoise,_walkNoise,Time.deltaTime * 5f);
+            _currentNoise = _walkNoise;
         }
         else
         {
-            _currentNoise = Mathf.Lerp(_currentNoise,_idleNoise,Time.deltaTime * _noiseDecaySpeed);
+            _currentNoise = Mathf.MoveTowards(_currentNoise,_idleNoise,_noiseDecaySpeed * Time.fixedDeltaTime);
         }
     }
     public void OnDeath()

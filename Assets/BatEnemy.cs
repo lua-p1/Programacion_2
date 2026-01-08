@@ -14,10 +14,24 @@ public class BatEnemy : MonoBehaviour
     [SerializeField] private float _attackRange = 1.2f;
     [SerializeField] private float _damage = 10f;
     private Vector3 _attackPoint;
+    private FSM _fsm;
     private void Awake()
     {
         if (_animator == null)
             _animator = GetComponentInChildren<Animator>();
+    }
+    private void Update()
+    {
+        _fsm.OnUpdate();
+    }
+    private void Start()
+    {
+        _fsm = new FSM();
+        _fsm.AddState(FSM.State.Roost, new RoostState(this, _fsm));
+        _fsm.AddState(FSM.State.Listen, new ListenState(this, _fsm, 1.2f));
+        _fsm.AddState(FSM.State.DiveAttack, new DiveAttackState(this, _fsm));
+        _fsm.AddState(FSM.State.Retreat, new RetreatState(this, _fsm));
+        _fsm.ChangeState(FSM.State.Roost);
     }
     public bool CanHearPlayer()
     {
