@@ -42,8 +42,8 @@ public class BatEnemy : MonoBehaviour
     public void SetRetreatPoint()
     {
         // Punto arriba del murciélago (techo / oscuridad)
-       // _retreatPoint = transform.position + Vector3.up * _retreatHeight;
-        _retreatPoint = transform.position + Vector3.up * _retreatHeight + transform.forward * Random.Range(-2f, 2f);
+    _retreatPoint = transform.position + Vector3.up * _retreatHeight;
+     //_retreatPoint = transform.position + Vector3.up * _retreatHeight + transform.forward * Random.Range(-2f, 2f);
     }
     public void MoveToRetreat()
     {
