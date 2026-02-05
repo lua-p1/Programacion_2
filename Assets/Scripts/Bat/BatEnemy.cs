@@ -11,7 +11,7 @@ public class BatEnemy : MonoBehaviour
     private Vector3 _retreatPoint;
     [Header("Dive Attack")]
     [SerializeField] private float _diveSpeed = 10f;
-    [SerializeField] private float _attackRange = 1.2f;
+    [SerializeField] private float _attackRange = 0.5f;
     [SerializeField] private float _damage = 10f;
     private Vector3 _attackPoint;
     private FSM _fsm;
@@ -41,9 +41,7 @@ public class BatEnemy : MonoBehaviour
     }
     public void SetRetreatPoint()
     {
-        // Punto arriba del murciélago (techo / oscuridad)
     _retreatPoint = transform.position + Vector3.up * _retreatHeight;
-     //_retreatPoint = transform.position + Vector3.up * _retreatHeight + transform.forward * Random.Range(-2f, 2f);
     }
     public void MoveToRetreat()
     {
@@ -56,10 +54,16 @@ public class BatEnemy : MonoBehaviour
     public void DiveTowardsPlayer()
     {
         if (GameManager.instance.player == null) return;
-        _attackPoint = GameManager.instance.player.transform.position;
-        _attackPoint.y = 0.40f;
-        Debug.Log(_attackPoint);
-        transform.position = Vector3.MoveTowards(transform.position,_attackPoint,_diveSpeed * Time.deltaTime);
+        Transform player = GameManager.instance.player.transform;
+        _attackPoint = player.position;
+        Vector3 direction = _attackPoint - transform.position;
+        direction.y = 0f;
+        if (direction.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation,Time.deltaTime * 6f);
+            transform.position = Vector3.MoveTowards(transform.position,_attackPoint,_diveSpeed * Time.deltaTime);
+        }
     }
     public bool HasReachedAttackPoint()
     {
@@ -71,6 +75,7 @@ public class BatEnemy : MonoBehaviour
         float distance = Vector3.Distance(transform.position,GameManager.instance.player.transform.position);
         if (distance <= _attackRange)
         {
+            Debug.Log($"la distancia es de " + distance);
             var life = GameManager.instance.player.GetComponent<ThirdPersonInputs>().GetPlayerComponentLife;
             life.TakeDamage(_damage);
         }
