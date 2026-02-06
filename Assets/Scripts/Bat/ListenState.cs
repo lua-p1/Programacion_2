@@ -14,6 +14,7 @@ public class ListenState : IState
     public void OnEnter()
     {
         _timer = 0f;
+        _bat.Animator.SetBool("IsFlying", true);
     }
     public void OnUpdate()
     {

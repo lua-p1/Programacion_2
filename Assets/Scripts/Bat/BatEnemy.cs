@@ -75,7 +75,7 @@ public class BatEnemy : MonoBehaviour
         float distance = Vector3.Distance(transform.position,GameManager.instance.player.transform.position);
         if (distance <= _attackRange)
         {
-            Debug.Log($"la distancia es de " + distance);
+            //Debug.Log($"la distancia es de " + distance);
             var life = GameManager.instance.player.GetComponent<ThirdPersonInputs>().GetPlayerComponentLife;
             life.TakeDamage(_damage);
         }
