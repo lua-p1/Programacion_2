@@ -11,7 +11,11 @@ public class AnimationBatHandler : MonoBehaviour
     }
     public void Idle()
     {
-        AudioManager.Instance.PlaySoundAtPosition("batWings", transform.position);
+        float batSound = Random.RandomRange(0f, 5f);
+        if (batSound < 3f)
+        {
+            AudioManager.Instance.PlaySoundAtPosition("batIdle", transform.position);
+        }
     }
     public void Attack()
     {
