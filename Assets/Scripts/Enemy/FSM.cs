@@ -5,6 +5,10 @@ public class FSM
     {
         Patrol,
         Chase,
+        Roost,
+        Listen,
+        DiveAttack,
+        Retreat
     }
     private Dictionary<State, IState> _allStates = new Dictionary<State, IState>();
     private IState _currentState;

@@ -3724,6 +3724,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bd114ae6abb3d5647b10b2d30fd2e1a5, type: 3}
   - {fileID: 8300000, guid: 6fe7230886be0714b8e20c2fe48dcebc, type: 3}
   - {fileID: 8300000, guid: a36fe9fab0cb54143a0f3ba2056d0894, type: 3}
+  - {fileID: 8300000, guid: 0813f2046fc9efb42b3b683c2f750ec2, type: 3}
+  - {fileID: 8300000, guid: f4263d48e15b42243a9995af68bec7bb, type: 3}
+  - {fileID: 8300000, guid: 04ce827953a35e74fad2e5f831dfd33d, type: 3}
   masterVolume: 1
   minPitch: 0.95
   maxPitch: 1.05

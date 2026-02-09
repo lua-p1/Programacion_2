@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-public class ThirdPersonInputsw : MonoBehaviour
+public class ThirdPersonInputs : MonoBehaviour
 {
     [SerializeField]private float sensibilidadX;
     [SerializeField]private float timeToRotate;
@@ -14,6 +14,13 @@ public class ThirdPersonInputsw : MonoBehaviour
     private bool _isDead = false;
     private float currentYRotation = 0f;
     private Rigidbody _rb;
+    [Header("Noise")]
+    [SerializeField] private float _currentNoise = 0;
+    [SerializeField] private float _minWalkNoise = 1f;
+    [SerializeField] private float _maxWalkNoise = 2f;
+    [SerializeField] private float _noiseBuildUpSpeed = 0.25f;
+    [SerializeField] private float _noiseDecaySpeed = 0.5f;
+    public float CurrentNoise => _currentNoise;
     void Start()
     {
         Cursor.visible = false;
@@ -38,9 +45,26 @@ public class ThirdPersonInputsw : MonoBehaviour
         _animator.SetFloat("MovementX", _getInputs.x);
         _animator.SetFloat("MovementY", _getInputs.y);
         _animator.SetBool("Walk", _getInputs != Vector2.zero);
+        if (_getInputs != Vector2.zero)
+        {
+            if (_currentNoise < _minWalkNoise)
+            {
+                _currentNoise = _minWalkNoise;
+            }
+            else
+            {
+                _currentNoise += _noiseBuildUpSpeed * Time.fixedDeltaTime;
+                _currentNoise = Mathf.Clamp(_currentNoise, _minWalkNoise, _maxWalkNoise);
+            }
+        }
+        else
+        {
+            _currentNoise = Mathf.MoveTowards(_currentNoise,0f,_noiseDecaySpeed * Time.fixedDeltaTime);
+        }
     }
     public void OnDeath()
     {
+        _currentNoise = 0;
         _isDead = true;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
