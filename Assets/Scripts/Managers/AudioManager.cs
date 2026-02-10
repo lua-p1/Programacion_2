@@ -17,6 +17,7 @@ public class AudioManager : MonoBehaviour
     [Header("Pool Settings")]
     public int initialSources = 10;
     private List<AudioSourceController> _sources = new List<AudioSourceController>();
+    public string CurrentSoundName { get; private set; }
     private void Awake()
     {
         if (Instance == null)
@@ -63,6 +64,16 @@ public class AudioManager : MonoBehaviour
         AudioSourceController source = GetAvailableSource();
         source.PlayClip(clip, masterVolume, Random.Range(minPitch, maxPitch));
     }
+    public void StopSound(string soundName)
+    {
+        AudioSourceController source = _sources.Find(x =>x.IsPlaying &&x.Source.clip != null &&x.Source.clip.name == soundName);
+        if (source == null)
+        {
+            Debug.LogWarning($"No hay ningún audio reproduciéndose con el nombre '{soundName}'");
+            return;
+        }
+        source.Stop();
+    }
     public void PlaySoundAtPosition(string soundName, Vector3 position)
     {
         AudioClip clip = FindAudio(soundName);
@@ -78,14 +89,26 @@ public class AudioManager : MonoBehaviour
     {
         foreach (AudioSourceController src in _sources)
             if (!src.IsPlaying) return src;
-
         return CreateNewSource();
     }
     public AudioClip FindAudio(string soundName)
     {
         foreach (AudioClip clip in clips)
-            if (clip.name == soundName)
-                return clip;
+        if (clip.name == soundName) return clip;
         return null;
     }
+    public AudioSourceController PlayLoopAtPosition(string soundName,Vector3 position,float volume,float pitch)
+    {
+        AudioClip clip = FindAudio(soundName);
+        if (clip == null)
+        {
+            Debug.LogWarning($"Audio '{soundName}' no encontrado.");
+            return null;
+        }
+        AudioSourceController source = GetAvailableSource();
+        source.transform.position = position;
+        source.PlayLoop(clip, volume, pitch);
+        return source;
+    }
+
 }

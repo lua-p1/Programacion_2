@@ -19,10 +19,12 @@ public class PlayerInteractor : MonoBehaviour
         Ray ray = new Ray(_rayOrigin.position, _rayOrigin.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, _interactionDistance, _interactionLayer))
         {
+            Debug.DrawRay(_rayOrigin.position, _rayOrigin.forward * _interactionDistance, Color.green);
             _currentObject = hit.collider.GetComponent<IInteractiveObject>();
         }
         else
         {
+             Debug.DrawRay(_rayOrigin.position, _rayOrigin.forward * _interactionDistance, Color.red);
             _currentObject = null;
         }
     }

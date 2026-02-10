@@ -11,7 +11,7 @@ public class AnimationEventHandler : MonoBehaviour
     }
     public void OnHurtEvent()
     {
-        int n = Random.Range(1, 4);
+        int n = Random.Range(1, 3);
         AudioManager.Instance.PlaySound($"hurt_{n}");
     }
     public void OnDeathEvent()

@@ -13,7 +13,8 @@ public class RoostState : IState
     }
     public void OnUpdate()
     {
-        if (_bat.CanHearPlayer())
+        _bat.DetectBestNoiseTarget();
+        if (_bat.CurrentNoiseTarget != null)
         {
             _fsm.ChangeState(FSM.State.Listen);
         }

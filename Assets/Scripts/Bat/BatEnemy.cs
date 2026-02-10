@@ -15,6 +15,8 @@ public class BatEnemy : MonoBehaviour
     [SerializeField] private float _damage = 10f;
     private Vector3 _attackPoint;
     private FSM _fsm;
+    public Transform CurrentNoiseTarget { get; private set; }
+    private float _currentNoiseValue;
     private void Awake()
     {
         if (_animator == null)
@@ -51,18 +53,17 @@ public class BatEnemy : MonoBehaviour
     {
         return Vector3.Distance(transform.position, _retreatPoint) < 0.1f;
     }
-    public void DiveTowardsPlayer()
+    public void DiveTowardsTarget()
     {
-        if (GameManager.instance.player == null) return;
-        Transform player = GameManager.instance.player.transform;
-        _attackPoint = player.position;
+        if (CurrentNoiseTarget == null) return;
+        _attackPoint = CurrentNoiseTarget.position;
         Vector3 direction = _attackPoint - transform.position;
         direction.y = 0f;
         if (direction.sqrMagnitude > 0.01f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation,Time.deltaTime * 6f);
-            transform.position = Vector3.MoveTowards(transform.position,_attackPoint,_diveSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 6f);
+            transform.position = Vector3.MoveTowards(transform.position, _attackPoint, _diveSpeed * Time.deltaTime);
         }
     }
     public bool HasReachedAttackPoint()
@@ -71,14 +72,43 @@ public class BatEnemy : MonoBehaviour
     }
     public void Attack()
     {
-        if (GameManager.instance.player == null) return;
-        float distance = Vector3.Distance(transform.position,GameManager.instance.player.transform.position);
-        if (distance <= _attackRange)
+        if (CurrentNoiseTarget == null) return;
+        if (CurrentNoiseTarget.CompareTag("Player"))
         {
-            //Debug.Log($"la distancia es de " + distance);
-            var life = GameManager.instance.player.GetComponent<ThirdPersonInputs>().GetPlayerComponentLife;
+            var life = CurrentNoiseTarget.GetComponent<ThirdPersonInputs>().GetPlayerComponentLife;
             life.TakeDamage(_damage);
         }
-
+        else
+        {
+            NoiseEmitter emitter = CurrentNoiseTarget.GetComponent<NoiseEmitter>();
+            if (emitter != null)
+                emitter.Consume();
+        }
+    }
+    public bool DetectBestNoiseTarget()
+    {
+        CurrentNoiseTarget = null;
+        _currentNoiseValue = 0f;
+        var player = GameManager.instance.player;
+        var playerInputs = player.GetComponent<ThirdPersonInputs>();
+        float playerDistance = Vector3.Distance(transform.position, player.transform.position);
+        if (playerDistance <= hearingRange && playerInputs.CurrentNoise >= noiseThreshold)
+        {
+            _currentNoiseValue = playerInputs.CurrentNoise;
+            CurrentNoiseTarget = player.transform;
+        }
+        NoiseEmitter[] emitters = FindObjectsOfType<NoiseEmitter>();
+        foreach (var emitter in emitters)
+        {
+            if (!emitter.IsActive) continue;
+            float distance = Vector3.Distance(transform.position, emitter.transform.position);
+            if (distance > hearingRange) continue;
+            if (emitter.NoiseAmount > _currentNoiseValue)
+            {
+                _currentNoiseValue = emitter.NoiseAmount;
+                CurrentNoiseTarget = emitter.transform;
+            }
+        }
+        return CurrentNoiseTarget != null;
     }
 }

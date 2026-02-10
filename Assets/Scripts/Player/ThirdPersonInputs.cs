@@ -92,22 +92,14 @@ public class ThirdPersonInputs : MonoBehaviour
     private void OnDrawGizmos()
     {
         if (_lookOrigin == null) return;
-
         Vector3 origin = _lookOrigin.position;
         Vector3 forward = _lookOrigin.forward;
-
         float halfAngle = _lookMaxAngle * 0.5f;
         float distance = _lookMaxDistance;
-
         Gizmos.color = Color.yellow;
-
-        // Rayo central
         Gizmos.DrawRay(origin, forward * distance);
-
-        // Bordes del cono
         Vector3 rightLimit = Quaternion.AngleAxis(halfAngle, Vector3.up) * forward;
         Vector3 leftLimit = Quaternion.AngleAxis(-halfAngle, Vector3.up) * forward;
-
         Gizmos.DrawRay(origin, rightLimit * distance);
         Gizmos.DrawRay(origin, leftLimit * distance);
     }

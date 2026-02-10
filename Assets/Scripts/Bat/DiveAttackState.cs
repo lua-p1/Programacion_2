@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class DiveAttackState : IState
 {
     private BatEnemy _bat;
@@ -19,8 +18,7 @@ public class DiveAttackState : IState
     public void OnUpdate()
     {
         _timer += Time.deltaTime;
-        _bat.DiveTowardsPlayer();
-
+        _bat.DiveTowardsTarget();
         if (_bat.HasReachedAttackPoint())
         {
             _bat.Attack();
