@@ -7,25 +7,27 @@ public class BatEnemy : MonoBehaviour
     public float hearingRange;
     public float noiseThreshold;
     [Header("Retreat")]
-    [SerializeField] private float _retreatHeight = 5f;
     [SerializeField] private float _retreatSpeed = 6f;
     private Vector3 _retreatPoint;
+    private Quaternion _retreatRotation;
+    [SerializeField] private Vector3 _initPosition;
+    [SerializeField] private Quaternion _initRotation;
     [Header("Dive Attack")]
     [SerializeField] private float _diveSpeed = 10f;
-    [SerializeField] private float _attackRange = 0.5f;
+    [SerializeField] private float _attackRange = 0.1f;
     [SerializeField] private float _damage = 10f;
     [SerializeField] private Transform _attackTarget;
     private FSM _fsm;
     private float _currentNoiseValue;
-    private float _baseHeight;
     private void Awake()
     {
         if (_animator == null)
             _animator = GetComponentInChildren<Animator>();
+        _initPosition = transform.position;
+        _initRotation = transform.rotation;
     }
     private void Start()
     {
-        _baseHeight = transform.position.y;
         _fsm = new FSM();
         _fsm.AddState(FSM.State.Roost, new RoostState(this, _fsm));
         _fsm.AddState(FSM.State.Listen, new ListenState(this, _fsm, 1.2f));
@@ -90,11 +92,13 @@ public class BatEnemy : MonoBehaviour
     }
     public void SetRetreatPoint()
     {
-        _retreatPoint = new Vector3(transform.position.x,_baseHeight + _retreatHeight,transform.position.z);
+        _retreatPoint = _initPosition;
+        _retreatRotation = _initRotation;
     }
     public void MoveToRetreat()
     {
         transform.position = Vector3.MoveTowards(transform.position,_retreatPoint,_retreatSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, _retreatRotation, Time.deltaTime * 6f);
     }
     public bool AtRetreatPoint()
     {
