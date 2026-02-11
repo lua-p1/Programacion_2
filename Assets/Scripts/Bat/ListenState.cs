@@ -13,6 +13,7 @@ public class ListenState : IState
     }
     public void OnEnter()
     {
+        Debug.Log("Enter Listen");
         _timer = 0f;
         _bat.Animator.SetBool("IsFlying", true);
     }

@@ -1,3 +1,4 @@
+using UnityEngine;
 public class RoostState : IState
 {
     private BatEnemy _bat;
@@ -9,6 +10,7 @@ public class RoostState : IState
     }
     public void OnEnter()
     {
+        Debug.Log("Enter roost");
         _bat.Animator.SetBool("IsFlying", false);
     }
     public void OnUpdate()

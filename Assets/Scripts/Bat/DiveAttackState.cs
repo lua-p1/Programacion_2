@@ -5,6 +5,7 @@ public class DiveAttackState : IState
     private FSM _fsm;
     private float _attackDuration = 1f;
     private float _timer;
+    private bool _isAlreadyAttack;
     public DiveAttackState(BatEnemy bat, FSM fsm)
     {
         _bat = bat;
@@ -12,20 +13,24 @@ public class DiveAttackState : IState
     }
     public void OnEnter()
     {
+        Debug.Log("Enter Dive");
+        _isAlreadyAttack = false;
         _timer = 0f;
         _bat.Animator.SetTrigger("Dive");
     }
     public void OnUpdate()
     {
         _timer += Time.deltaTime;
+        _bat.DiveTowardsTarget();
+        if (!_isAlreadyAttack && _bat.HasReachedAttackPoint())
+        {
+            Debug.Log("Attack");
+            _bat.Attack();
+            _isAlreadyAttack = true;
+        }
         if (_timer >= _attackDuration)
         {
             _fsm.ChangeState(FSM.State.Retreat);
-        }
-        _bat.DiveTowardsTarget();
-        if (_bat.HasReachedAttackPoint())
-        {
-            _bat.Attack();
         }
     }
     public void OnExit()
