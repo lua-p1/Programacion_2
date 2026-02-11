@@ -1,24 +1,35 @@
+using Unity.VisualScripting;
 using UnityEngine;
-public class NoiseEmitter : MonoBehaviour , IInteractiveObject
+public class NoiseEmitter : MonoBehaviour , IInteractiveObject, IAttackable
 {
     [Header("Noise Settings")]
     [SerializeField] public float noiseValue  = 5f;
-    [SerializeField] private float activeTime = 5f;
-    [SerializeField] private float cooldown = 8f;
+    [SerializeField] private float _activeTime = 5f;
+    [SerializeField] private float _cooldown = 8f;
+    private AudioSourceController _currentAudio;
     [Header("Feedback")]
     [SerializeField] private GameObject visualFeedback;
-    [SerializeField] private string soundName = "noiseEmitter";
+    [SerializeField] private string _soundName = "noiseEmitter";
     [SerializeField]private bool _active;
     [SerializeField]private bool _onCooldown;
     [SerializeField]private float _timer;
     public bool IsActive => _active;
     public float NoiseAmount => noiseValue ;
+    [Header("Target Point")]
+    [SerializeField] private Transform noisePoint;
+    public Transform NoisePoint => noisePoint != null ? noisePoint : transform;
+    public void OnAttacked(float damage)
+    {
+        Consume();
+    }
     private void Update()
     {
         if (!_active) return;
+        if (_currentAudio != null)
+            _currentAudio.transform.position = transform.position;
         _timer += Time.deltaTime;
-        if (_timer >= activeTime)
-        Deactivate();
+        if (_timer >= _activeTime)
+            Deactivate();
     }
     public void Activate()
     {
@@ -28,28 +39,37 @@ public class NoiseEmitter : MonoBehaviour , IInteractiveObject
         _timer = 0f;
         if (visualFeedback != null)
             visualFeedback.SetActive(true);
-        AudioManager.Instance.PlaySoundAtPosition(soundName, transform.position);
+        _currentAudio = AudioManager.Instance.PlayLoopAtPosition(_soundName,transform.position,AudioManager.Instance.masterVolume,Random.Range(AudioManager.Instance.minPitch,AudioManager.Instance.maxPitch));
     }
     public void Consume()
     {
-        Destroy(gameObject);
+        if (_currentAudio != null)
+        {
+            _currentAudio.Stop();
+            _currentAudio = null;
+        }
         if (visualFeedback != null)
             visualFeedback.SetActive(false);
-        AudioManager.Instance?.StopSound(soundName);
+        Destroy(gameObject);
     }
     private void Deactivate()
     {
         _active = false;
+        _timer = 0f;
         _onCooldown = true;
+        if (_currentAudio != null)
+        {
+            _currentAudio.Stop();
+            _currentAudio = null;
+        }
         if (visualFeedback != null)
             visualFeedback.SetActive(false);
-        Invoke(nameof(ResetCooldown), cooldown);
+        Invoke(nameof(ResetCooldown), _cooldown);
     }
     private void ResetCooldown()
     {
         _onCooldown = false;
     }
-
     public void InteractAction()
     {
         Activate();

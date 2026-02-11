@@ -15,7 +15,6 @@ public class ListenState : IState
     {
         _timer = 0f;
         _bat.Animator.SetBool("IsFlying", true);
-        _bat.DetectBestNoiseTarget();
     }
     public void OnUpdate()
     {

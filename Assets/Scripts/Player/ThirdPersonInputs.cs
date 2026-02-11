@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-public class ThirdPersonInputs : MonoBehaviour
+public class ThirdPersonInputs : MonoBehaviour, IAttackable
 {
     [SerializeField]private float sensibilidadX;
     [SerializeField]private float timeToRotate;
@@ -26,6 +26,13 @@ public class ThirdPersonInputs : MonoBehaviour
     [SerializeField] private float _lookMaxDistance = 45f;
     [SerializeField] private float _lookMaxAngle = 20;
     [SerializeField] private LayerMask _statueLayerMask;
+    [Header("Attack Point")]
+    [SerializeField] private Transform attackPoint;
+    public Transform AttackPoint => attackPoint;
+    public void OnAttacked(float damage)
+    {
+        GetPlayerComponentLife.TakeDamage(damage);
+    }
     void Start()
     {
         Cursor.visible = false;
@@ -103,5 +110,4 @@ public class ThirdPersonInputs : MonoBehaviour
         Gizmos.DrawRay(origin, rightLimit * distance);
         Gizmos.DrawRay(origin, leftLimit * distance);
     }
-
 }

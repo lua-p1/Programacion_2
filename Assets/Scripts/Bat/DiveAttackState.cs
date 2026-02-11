@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 public class DiveAttackState : IState
 {
     private BatEnemy _bat;
@@ -12,7 +12,7 @@ public class DiveAttackState : IState
     }
     public void OnEnter()
     {
-        _timer = 0;
+        _timer = 0f;
         _bat.Animator.SetTrigger("Dive");
     }
     public void OnUpdate()
@@ -23,8 +23,9 @@ public class DiveAttackState : IState
         {
             _bat.Attack();
             _fsm.ChangeState(FSM.State.Retreat);
+            return;
         }
-        if (_timer > _attackDuration)
+        if (_timer >= _attackDuration)
         {
             _fsm.ChangeState(FSM.State.Retreat);
         }

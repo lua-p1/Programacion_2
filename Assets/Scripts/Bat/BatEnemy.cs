@@ -3,6 +3,7 @@ public class BatEnemy : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     public Animator Animator => _animator;
+    [Header("Hearing")]
     public float hearingRange;
     public float noiseThreshold;
     [Header("Retreat")]
@@ -13,21 +14,18 @@ public class BatEnemy : MonoBehaviour
     [SerializeField] private float _diveSpeed = 10f;
     [SerializeField] private float _attackRange = 0.5f;
     [SerializeField] private float _damage = 10f;
-    private Vector3 _attackPoint;
+    [SerializeField] private Transform _attackTarget;
     private FSM _fsm;
-    public Transform CurrentNoiseTarget { get; private set; }
     private float _currentNoiseValue;
+    private float _baseHeight;
     private void Awake()
     {
         if (_animator == null)
             _animator = GetComponentInChildren<Animator>();
     }
-    private void Update()
-    {
-        _fsm.OnUpdate();
-    }
     private void Start()
     {
+        _baseHeight = transform.position.y;
         _fsm = new FSM();
         _fsm.AddState(FSM.State.Roost, new RoostState(this, _fsm));
         _fsm.AddState(FSM.State.Listen, new ListenState(this, _fsm, 1.2f));
@@ -35,15 +33,64 @@ public class BatEnemy : MonoBehaviour
         _fsm.AddState(FSM.State.Retreat, new RetreatState(this, _fsm));
         _fsm.ChangeState(FSM.State.Roost);
     }
-    public bool CanHearPlayer()
+    private void Update()
     {
-        float distance = Vector3.Distance(transform.position,GameManager.instance.player.transform.position);
-        ThirdPersonInputs player = GameManager.instance.player.GetComponent<ThirdPersonInputs>();
-        return distance <= hearingRange && player.CurrentNoise >= noiseThreshold;
+        _fsm.OnUpdate();
+    }
+    public bool DetectBestNoiseTarget()
+    {
+        _attackTarget = null;
+        _currentNoiseValue = 0f;
+        var player = GameManager.instance.player;
+        var inputs = player.GetComponent<ThirdPersonInputs>();
+        float playerDistance = Vector3.Distance(transform.position, player.transform.position);
+        if (playerDistance <= hearingRange && inputs.CurrentNoise >= noiseThreshold)
+        {
+            _currentNoiseValue = inputs.CurrentNoise;
+            _attackTarget = inputs.AttackPoint;
+        }
+        foreach (var emitter in FindObjectsOfType<NoiseEmitter>())
+        {
+            if (!emitter.IsActive) continue;
+            float dist = Vector3.Distance(transform.position, emitter.transform.position);
+            if (dist > hearingRange) continue;
+
+            if (emitter.NoiseAmount > _currentNoiseValue)
+            {
+                _currentNoiseValue = emitter.NoiseAmount;
+                _attackTarget = emitter.NoisePoint;
+            }
+        }
+        return _attackTarget != null;
+    }
+    public void DiveTowardsTarget()
+    {
+        if (_attackTarget == null) return;
+        Vector3 targetPos = _attackTarget.position;
+        Vector3 direction = targetPos - transform.position;
+        if (direction.sqrMagnitude < 0.01f) return;
+        Quaternion rot = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 6f);
+        transform.position = Vector3.MoveTowards(transform.position,targetPos,_diveSpeed * Time.deltaTime);
+    }
+    public bool HasReachedAttackPoint()
+    {
+        if (_attackTarget == null) return false;
+
+        return Vector3.Distance(transform.position, _attackTarget.position) <= _attackRange;//
+    }
+    public void Attack()
+    {
+        if (_attackTarget == null) return;
+
+        if (_attackTarget.root.TryGetComponent<IAttackable>(out var attackable))
+        {
+            attackable.OnAttacked(_damage);
+        }
     }
     public void SetRetreatPoint()
     {
-    _retreatPoint = transform.position + Vector3.up * _retreatHeight;
+        _retreatPoint = new Vector3(transform.position.x,_baseHeight + _retreatHeight,transform.position.z);
     }
     public void MoveToRetreat()
     {
@@ -53,62 +100,11 @@ public class BatEnemy : MonoBehaviour
     {
         return Vector3.Distance(transform.position, _retreatPoint) < 0.1f;
     }
-    public void DiveTowardsTarget()
+    private void OnDrawGizmos()
     {
-        if (CurrentNoiseTarget == null) return;
-        _attackPoint = CurrentNoiseTarget.position;
-        Vector3 direction = _attackPoint - transform.position;
-        direction.y = 0f;
-        if (direction.sqrMagnitude > 0.01f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 6f);
-            transform.position = Vector3.MoveTowards(transform.position, _attackPoint, _diveSpeed * Time.deltaTime);
-        }
-    }
-    public bool HasReachedAttackPoint()
-    {
-        return Vector3.Distance(transform.position, _attackPoint) <= _attackRange || transform.position.y <= GameManager.instance.player.transform.position.y;
-    }
-    public void Attack()
-    {
-        if (CurrentNoiseTarget == null) return;
-        if (CurrentNoiseTarget.CompareTag("Player"))
-        {
-            var life = CurrentNoiseTarget.GetComponent<ThirdPersonInputs>().GetPlayerComponentLife;
-            life.TakeDamage(_damage);
-        }
-        else
-        {
-            NoiseEmitter emitter = CurrentNoiseTarget.GetComponent<NoiseEmitter>();
-            if (emitter != null)
-                emitter.Consume();
-        }
-    }
-    public bool DetectBestNoiseTarget()
-    {
-        CurrentNoiseTarget = null;
-        _currentNoiseValue = 0f;
-        var player = GameManager.instance.player;
-        var playerInputs = player.GetComponent<ThirdPersonInputs>();
-        float playerDistance = Vector3.Distance(transform.position, player.transform.position);
-        if (playerDistance <= hearingRange && playerInputs.CurrentNoise >= noiseThreshold)
-        {
-            _currentNoiseValue = playerInputs.CurrentNoise;
-            CurrentNoiseTarget = player.transform;
-        }
-        NoiseEmitter[] emitters = FindObjectsOfType<NoiseEmitter>();
-        foreach (var emitter in emitters)
-        {
-            if (!emitter.IsActive) continue;
-            float distance = Vector3.Distance(transform.position, emitter.transform.position);
-            if (distance > hearingRange) continue;
-            if (emitter.NoiseAmount > _currentNoiseValue)
-            {
-                _currentNoiseValue = emitter.NoiseAmount;
-                CurrentNoiseTarget = emitter.transform;
-            }
-        }
-        return CurrentNoiseTarget != null;
+        if (_attackTarget == null) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(_attackTarget.position, 0.15f);
+        Gizmos.DrawLine(transform.position, _attackTarget.position);
     }
 }

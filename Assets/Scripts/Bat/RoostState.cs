@@ -1,7 +1,7 @@
 public class RoostState : IState
 {
-    private FSM _fsm;
     private BatEnemy _bat;
+    private FSM _fsm;
     public RoostState(BatEnemy bat, FSM fsm)
     {
         _bat = bat;
@@ -13,8 +13,7 @@ public class RoostState : IState
     }
     public void OnUpdate()
     {
-        _bat.DetectBestNoiseTarget();
-        if (_bat.CurrentNoiseTarget != null)
+        if (_bat.DetectBestNoiseTarget())
         {
             _fsm.ChangeState(FSM.State.Listen);
         }
