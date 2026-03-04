@@ -15,10 +15,10 @@ public class ThirdPersonInputs : MonoBehaviour, IAttackable
     private float currentYRotation = 0f;
     private Rigidbody _rb;
     [Header("Noise")]
-    [SerializeField] private float _minWalkNoise = 1f;
-    [SerializeField] private float _noiseBuildUpSpeed = 2f;
-    [SerializeField] private float _noiseDecaySpeed = 3f;
-    [SerializeField] private float _maxWalkNoise = 5f;
+    [SerializeField] private float _minWalkNoise = 0.02f;
+    [SerializeField] private float _maxWalkNoise = 2f; 
+    [SerializeField] private float _noiseBuildUpSpeed = 0.25f; 
+    [SerializeField] private float _noiseDecaySpeed = 0.5f;
     [Header("Noise UI")]
     [SerializeField] private Slider _noiseSlider;
     private PlayerNoise _playerNoise;

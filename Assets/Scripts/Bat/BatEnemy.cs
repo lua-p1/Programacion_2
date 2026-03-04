@@ -92,7 +92,7 @@ public class BatEnemy : MonoBehaviour
 
         float realDistance = Vector3.Distance(transform.position, targetTransform.position);
 
-        if (realDistance > _attackRange + 1f)
+        if (realDistance > _attackRange + 3f)
             return;
 
         attackable.OnAttacked(_damage);
@@ -118,6 +118,6 @@ public class BatEnemy : MonoBehaviour
         Gizmos.DrawSphere(_attackTarget.position, 0.15f);
         Gizmos.DrawLine(transform.position, _attackTarget.position);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, _attackRange + 1f);
+        Gizmos.DrawWireSphere(transform.position, _attackRange + 3f);
     }
 }

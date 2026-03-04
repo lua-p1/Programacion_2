@@ -7531,8 +7531,6 @@ MonoBehaviour:
   earSprites:
   - {fileID: 21300000, guid: ae0decd03303e4348a8b1a8f798fd6ae, type: 3}
   - {fileID: 21300000, guid: 97356e93f3c6e7a46a6668809a636137, type: 3}
-  - {fileID: 21300000, guid: e7f207fd6c7fdb14a8f50e7289d00dc1, type: 3}
-  - {fileID: 21300000, guid: bfbcaddddeea77b43b4c8825fbf627e9, type: 3}
   frameRate: 0.4
 --- !u!114 &1160619219
 MonoBehaviour:
@@ -7559,7 +7557,7 @@ MonoBehaviour:
   m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 1
-  m_FillAmount: 0
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -10979,9 +10977,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 3
   m_MinValue: 0
-  m_MaxValue: 10
+  m_MaxValue: 2
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -13747,20 +13745,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bat
       objectReference: {fileID: 0}
+    - target: {fileID: 2344689953349998600, guid: 789d0ab68ea8d3d40a9442c08d469d3a,
+        type: 3}
+      propertyPath: _attackRange
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 8157732749156331591, guid: 789d0ab68ea8d3d40a9442c08d469d3a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.17403
+      value: 15.22
       objectReference: {fileID: 0}
     - target: {fileID: 8157732749156331591, guid: 789d0ab68ea8d3d40a9442c08d469d3a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.186
+      value: 2.63
       objectReference: {fileID: 0}
     - target: {fileID: 8157732749156331591, guid: 789d0ab68ea8d3d40a9442c08d469d3a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.765
+      value: -12.36
       objectReference: {fileID: 0}
     - target: {fileID: 8157732749156331591, guid: 789d0ab68ea8d3d40a9442c08d469d3a,
         type: 3}
@@ -14046,9 +14049,29 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1093530137921047402, guid: f88738b729e7a1343962462e9f559e72,
         type: 3}
+      propertyPath: _noiseSlider
+      value: 
+      objectReference: {fileID: 1664723982}
+    - target: {fileID: 1093530137921047402, guid: f88738b729e7a1343962462e9f559e72,
+        type: 3}
       propertyPath: _healthSlider
       value: 
       objectReference: {fileID: 153423061}
+    - target: {fileID: 1093530137921047402, guid: f88738b729e7a1343962462e9f559e72,
+        type: 3}
+      propertyPath: _minWalkNoise
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093530137921047402, guid: f88738b729e7a1343962462e9f559e72,
+        type: 3}
+      propertyPath: _noiseDecaySpeed
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093530137921047402, guid: f88738b729e7a1343962462e9f559e72,
+        type: 3}
+      propertyPath: _noiseBuildUpSpeed
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 2601738266272717624, guid: f88738b729e7a1343962462e9f559e72,
         type: 3}
       propertyPath: m_LocalPosition.x
