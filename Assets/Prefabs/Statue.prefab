@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3ac996a8d53e9643b8f93f4be166658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chaseRange: 10
+  _chaseRange: 7
   _damage: 10
   lookOrigin: {fileID: 0}
   _slideSounds:
