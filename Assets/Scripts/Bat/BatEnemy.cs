@@ -14,7 +14,7 @@ public class BatEnemy : MonoBehaviour
     [SerializeField] private Quaternion _initRotation;
     [Header("Dive Attack")]
     [SerializeField] private float _diveSpeed = 10f;
-    [SerializeField] private float _attackRange = 0.1f;
+    [SerializeField] private float _attackRange = 1.5f;
     [SerializeField] private float _damage = 10f;
     [SerializeField] private Transform _attackTarget;
     private FSM _fsm;
@@ -110,6 +110,10 @@ public class BatEnemy : MonoBehaviour
     public bool AtRetreatPoint()
     {
         return Vector3.Distance(transform.position, _retreatPoint) < 0.1f;
+    }
+    public void EndDiveFromAnimation()
+    {
+        _fsm.ChangeState(FSM.State.Retreat);
     }
     private void OnDrawGizmos()
     {

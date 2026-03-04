@@ -26,4 +26,8 @@ public class AnimationBatHandler : MonoBehaviour
     {
         AudioManager.Instance.PlaySoundAtPosition("batFlying", transform.position);
     }
+    public void EndDive()
+    {
+        _bat.EndDiveFromAnimation();
+    }
 }
