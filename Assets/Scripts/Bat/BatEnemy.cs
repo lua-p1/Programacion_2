@@ -78,17 +78,24 @@ public class BatEnemy : MonoBehaviour
     public bool HasReachedAttackPoint()
     {
         if (_attackTarget == null) return false;
-
-        return Vector3.Distance(transform.position, _attackTarget.position) <= _attackRange;//
+        float sqrDist = (transform.position - _attackTarget.position).sqrMagnitude;
+        return sqrDist <= _attackRange * _attackRange;
     }
     public void Attack()
     {
         if (_attackTarget == null) return;
 
-        if (_attackTarget.root.TryGetComponent<IAttackable>(out var attackable))
-        {
-            attackable.OnAttacked(_damage);
-        }
+        Transform targetTransform = _attackTarget.GetComponentInParent<Transform>();
+        var attackable = _attackTarget.GetComponentInParent<IAttackable>();
+
+        if (attackable == null) return;
+
+        float realDistance = Vector3.Distance(transform.position, targetTransform.position);
+
+        if (realDistance > _attackRange + 1f)
+            return;
+
+        attackable.OnAttacked(_damage);
     }
     public void SetRetreatPoint()
     {
@@ -110,5 +117,7 @@ public class BatEnemy : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(_attackTarget.position, 0.15f);
         Gizmos.DrawLine(transform.position, _attackTarget.position);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, _attackRange + 1f);
     }
 }
