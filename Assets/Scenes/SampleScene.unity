@@ -13745,11 +13745,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bat
       objectReference: {fileID: 0}
-    - target: {fileID: 2344689953349998600, guid: 789d0ab68ea8d3d40a9442c08d469d3a,
-        type: 3}
-      propertyPath: _attackRange
-      value: 0.01
-      objectReference: {fileID: 0}
     - target: {fileID: 8157732749156331591, guid: 789d0ab68ea8d3d40a9442c08d469d3a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14057,21 +14052,6 @@ PrefabInstance:
       propertyPath: _healthSlider
       value: 
       objectReference: {fileID: 153423061}
-    - target: {fileID: 1093530137921047402, guid: f88738b729e7a1343962462e9f559e72,
-        type: 3}
-      propertyPath: _minWalkNoise
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1093530137921047402, guid: f88738b729e7a1343962462e9f559e72,
-        type: 3}
-      propertyPath: _noiseDecaySpeed
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 1093530137921047402, guid: f88738b729e7a1343962462e9f559e72,
-        type: 3}
-      propertyPath: _noiseBuildUpSpeed
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 2601738266272717624, guid: f88738b729e7a1343962462e9f559e72,
         type: 3}
       propertyPath: m_LocalPosition.x
