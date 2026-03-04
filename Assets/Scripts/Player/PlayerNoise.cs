@@ -42,6 +42,7 @@ public class PlayerNoise
         }
 
         UpdateSlider();
+        Debug.Log(_currentNoise);
     }
     private void UpdateSlider()
     {

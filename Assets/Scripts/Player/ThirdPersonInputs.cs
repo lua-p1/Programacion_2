@@ -15,11 +15,10 @@ public class ThirdPersonInputs : MonoBehaviour, IAttackable
     private float currentYRotation = 0f;
     private Rigidbody _rb;
     [Header("Noise")]
-    [SerializeField] private float _currentNoise = 0;
     [SerializeField] private float _minWalkNoise = 1f;
-    [SerializeField] private float _maxWalkNoise = 2f;
-    [SerializeField] private float _noiseBuildUpSpeed = 0.25f;
-    [SerializeField] private float _noiseDecaySpeed = 0.5f;
+    [SerializeField] private float _noiseBuildUpSpeed = 2f;
+    [SerializeField] private float _noiseDecaySpeed = 3f;
+    [SerializeField] private float _maxWalkNoise = 5f;
     [Header("Noise UI")]
     [SerializeField] private Slider _noiseSlider;
     private PlayerNoise _playerNoise;
@@ -61,7 +60,8 @@ public class ThirdPersonInputs : MonoBehaviour, IAttackable
         _animator.SetFloat("MovementX", _getInputs.x);
         _animator.SetFloat("MovementY", _getInputs.y);
         _animator.SetBool("Walk", _getInputs != Vector2.zero);
-        _playerNoise.UpdateNoise(_getInputs != Vector2.zero, Time.fixedDeltaTime);
+        bool isMoving = _getInputs.sqrMagnitude > 0.01f;
+        _playerNoise.UpdateNoise(isMoving, Time.fixedDeltaTime);
     }
     public bool IsLookingAtStatue(Transform statue)
     {
@@ -79,7 +79,6 @@ public class ThirdPersonInputs : MonoBehaviour, IAttackable
     }
     public void OnDeath()
     {
-        _currentNoise = 0;
         _isDead = true;
         _playerNoise.ResetNoise();
         Cursor.visible = true;
