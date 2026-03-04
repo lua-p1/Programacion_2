@@ -20,7 +20,10 @@ public class ThirdPersonInputs : MonoBehaviour, IAttackable
     [SerializeField] private float _maxWalkNoise = 2f;
     [SerializeField] private float _noiseBuildUpSpeed = 0.25f;
     [SerializeField] private float _noiseDecaySpeed = 0.5f;
-    public float CurrentNoise => _currentNoise;
+    [Header("Noise UI")]
+    [SerializeField] private Slider _noiseSlider;
+    private PlayerNoise _playerNoise;
+    public float CurrentNoise => _playerNoise.CurrentNoise;
     [Header("Look Detection")]
     [SerializeField] private Transform _lookOrigin;
     [SerializeField] private float _lookMaxDistance = 45f;
@@ -42,6 +45,7 @@ public class ThirdPersonInputs : MonoBehaviour, IAttackable
         _playerHealth = new PlayerHealth(_initHealth, _animator, this, _healthSlider, _damageParticles);
         _healthSlider.maxValue = _initHealth;
         _healthSlider.value = _initHealth;
+        _playerNoise = new PlayerNoise(_minWalkNoise,_maxWalkNoise,_noiseBuildUpSpeed,_noiseDecaySpeed,_noiseSlider);
     }
     void FixedUpdate()
     {
@@ -57,22 +61,7 @@ public class ThirdPersonInputs : MonoBehaviour, IAttackable
         _animator.SetFloat("MovementX", _getInputs.x);
         _animator.SetFloat("MovementY", _getInputs.y);
         _animator.SetBool("Walk", _getInputs != Vector2.zero);
-        if (_getInputs != Vector2.zero)
-        {
-            if (_currentNoise < _minWalkNoise)
-            {
-                _currentNoise = _minWalkNoise;
-            }
-            else
-            {
-                _currentNoise += _noiseBuildUpSpeed * Time.fixedDeltaTime;
-                _currentNoise = Mathf.Clamp(_currentNoise, _minWalkNoise, _maxWalkNoise);
-            }
-        }
-        else
-        {
-            _currentNoise = Mathf.MoveTowards(_currentNoise,0f,_noiseDecaySpeed * Time.fixedDeltaTime);
-        }
+        _playerNoise.UpdateNoise(_getInputs != Vector2.zero, Time.fixedDeltaTime);
     }
     public bool IsLookingAtStatue(Transform statue)
     {
@@ -92,6 +81,7 @@ public class ThirdPersonInputs : MonoBehaviour, IAttackable
     {
         _currentNoise = 0;
         _isDead = true;
+        _playerNoise.ResetNoise();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
