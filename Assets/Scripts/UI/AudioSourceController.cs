@@ -5,6 +5,7 @@ public class AudioSourceController : MonoBehaviour
     private AudioSource source;
     public AudioMixerGroup outputMixerGroup;
     public bool IsPlaying => source.isPlaying;
+    public AudioSource Source => source;
     private void Awake()
     {
         source = gameObject.AddComponent<AudioSource>();
@@ -33,5 +34,19 @@ public class AudioSourceController : MonoBehaviour
         source.pitch = pitch;
         source.volume = volume;
         source.PlayOneShot(clip);
+    }
+    public void PlayLoop(AudioClip clip, float volume, float pitch)
+    {
+        source.clip = clip;
+        source.volume = volume;
+        source.pitch = pitch;
+        source.loop = true;
+        source.Play();
+    }
+    public void Stop()
+    {
+        source.Stop();
+        source.clip = null;
+        source.loop = false;
     }
 }

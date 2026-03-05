@@ -1,3 +1,4 @@
+using UnityEngine;
 public class RetreatState : IState
 {
     private BatEnemy _bat;
@@ -9,6 +10,7 @@ public class RetreatState : IState
     }
     public void OnEnter()
     {
+        Debug.Log("Enter retreat");
         _bat.SetRetreatPoint();
     }
     public void OnUpdate()

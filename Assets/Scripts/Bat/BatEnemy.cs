@@ -3,26 +3,28 @@ public class BatEnemy : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     public Animator Animator => _animator;
+    [Header("Hearing")]
     public float hearingRange;
     public float noiseThreshold;
     [Header("Retreat")]
-    [SerializeField] private float _retreatHeight = 5f;
     [SerializeField] private float _retreatSpeed = 6f;
     private Vector3 _retreatPoint;
+    private Quaternion _retreatRotation;
+    [SerializeField] private Vector3 _initPosition;
+    [SerializeField] private Quaternion _initRotation;
     [Header("Dive Attack")]
     [SerializeField] private float _diveSpeed = 10f;
-    [SerializeField] private float _attackRange = 0.5f;
+    [SerializeField] private float _attackRange = 1.5f;
     [SerializeField] private float _damage = 10f;
-    private Vector3 _attackPoint;
+    [SerializeField] private Transform _attackTarget;
     private FSM _fsm;
+    private float _currentNoiseValue;
     private void Awake()
     {
         if (_animator == null)
             _animator = GetComponentInChildren<Animator>();
-    }
-    private void Update()
-    {
-        _fsm.OnUpdate();
+        _initPosition = transform.position;
+        _initRotation = transform.rotation;
     }
     private void Start()
     {
@@ -33,52 +35,90 @@ public class BatEnemy : MonoBehaviour
         _fsm.AddState(FSM.State.Retreat, new RetreatState(this, _fsm));
         _fsm.ChangeState(FSM.State.Roost);
     }
-    public bool CanHearPlayer()
+    private void Update()
     {
-        float distance = Vector3.Distance(transform.position,GameManager.instance.player.transform.position);
-        ThirdPersonInputs player = GameManager.instance.player.GetComponent<ThirdPersonInputs>();
-        return distance <= hearingRange && player.CurrentNoise >= noiseThreshold;
+        _fsm.OnUpdate();
+    }
+    public bool DetectBestNoiseTarget()
+    {
+        _attackTarget = null;
+        _currentNoiseValue = 0f;
+        foreach (var emitter in FindObjectsOfType<NoiseEmitter>())
+        {
+            if (!emitter.IsActive) continue;
+            float dist = Vector3.Distance(transform.position, emitter.transform.position);
+            if (dist > hearingRange) continue;
+            _attackTarget = emitter.NoisePoint;
+            return true;
+        }
+        var player = GameManager.instance.player;
+        var inputs = player.GetComponent<ThirdPersonInputs>();
+        float playerDistance = Vector3.Distance(transform.position, player.transform.position);
+        if (playerDistance <= hearingRange && inputs.CurrentNoise >= noiseThreshold)
+        {
+            _attackTarget = inputs.AttackPoint;
+            return true;
+        }
+        return false;
+        Debug.Log("Target actual: " + _attackTarget.name);
+    }
+    public void DiveTowardsTarget()
+    {
+        if (_attackTarget == null) return;
+        Vector3 targetPos = _attackTarget.position;
+        Vector3 direction = targetPos - transform.position;
+        if (direction.sqrMagnitude < 0.01f) return;
+        Quaternion rot = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 6f);
+        transform.position = Vector3.MoveTowards(transform.position,targetPos,_diveSpeed * Time.deltaTime);
+    }
+    public bool HasReachedAttackPoint()
+    {
+        if (_attackTarget == null) return false;
+        float sqrDist = (transform.position - _attackTarget.position).sqrMagnitude;
+        return sqrDist <= _attackRange * _attackRange;
+    }
+    public void Attack()
+    {
+        if (_attackTarget == null) return;
+
+        Transform targetTransform = _attackTarget.GetComponentInParent<Transform>();
+        var attackable = _attackTarget.GetComponentInParent<IAttackable>();
+
+        if (attackable == null) return;
+
+        float realDistance = Vector3.Distance(transform.position, targetTransform.position);
+
+        if (realDistance > _attackRange + 3f)
+            return;
+
+        attackable.OnAttacked(_damage);
     }
     public void SetRetreatPoint()
     {
-    _retreatPoint = transform.position + Vector3.up * _retreatHeight;
+        _retreatPoint = _initPosition;
+        _retreatRotation = _initRotation;
     }
     public void MoveToRetreat()
     {
         transform.position = Vector3.MoveTowards(transform.position,_retreatPoint,_retreatSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, _retreatRotation, Time.deltaTime * 6f);
     }
     public bool AtRetreatPoint()
     {
         return Vector3.Distance(transform.position, _retreatPoint) < 0.1f;
     }
-    public void DiveTowardsPlayer()
+    public void EndDiveFromAnimation()
     {
-        if (GameManager.instance.player == null) return;
-        Transform player = GameManager.instance.player.transform;
-        _attackPoint = player.position;
-        Vector3 direction = _attackPoint - transform.position;
-        direction.y = 0f;
-        if (direction.sqrMagnitude > 0.01f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation,Time.deltaTime * 6f);
-            transform.position = Vector3.MoveTowards(transform.position,_attackPoint,_diveSpeed * Time.deltaTime);
-        }
+        _fsm.ChangeState(FSM.State.Retreat);
     }
-    public bool HasReachedAttackPoint()
+    private void OnDrawGizmos()
     {
-        return Vector3.Distance(transform.position, _attackPoint) <= _attackRange || transform.position.y <= GameManager.instance.player.transform.position.y;
-    }
-    public void Attack()
-    {
-        if (GameManager.instance.player == null) return;
-        float distance = Vector3.Distance(transform.position,GameManager.instance.player.transform.position);
-        if (distance <= _attackRange)
-        {
-            //Debug.Log($"la distancia es de " + distance);
-            var life = GameManager.instance.player.GetComponent<ThirdPersonInputs>().GetPlayerComponentLife;
-            life.TakeDamage(_damage);
-        }
-
+        if (_attackTarget == null) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(_attackTarget.position, 0.15f);
+        Gizmos.DrawLine(transform.position, _attackTarget.position);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, _attackRange + 3f);
     }
 }

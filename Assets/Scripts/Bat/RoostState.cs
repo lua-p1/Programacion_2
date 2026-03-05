@@ -1,7 +1,8 @@
+using UnityEngine;
 public class RoostState : IState
 {
-    private FSM _fsm;
     private BatEnemy _bat;
+    private FSM _fsm;
     public RoostState(BatEnemy bat, FSM fsm)
     {
         _bat = bat;
@@ -9,11 +10,12 @@ public class RoostState : IState
     }
     public void OnEnter()
     {
+        Debug.Log("Enter roost");
         _bat.Animator.SetBool("IsFlying", false);
     }
     public void OnUpdate()
     {
-        if (_bat.CanHearPlayer())
+        if (_bat.DetectBestNoiseTarget())
         {
             _fsm.ChangeState(FSM.State.Listen);
         }

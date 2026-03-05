@@ -1,6 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-public class ThirdPersonInputs : MonoBehaviour
+public class ThirdPersonInputs : MonoBehaviour, IAttackable
 {
     [SerializeField]private float sensibilidadX;
     [SerializeField]private float timeToRotate;
@@ -15,12 +15,26 @@ public class ThirdPersonInputs : MonoBehaviour
     private float currentYRotation = 0f;
     private Rigidbody _rb;
     [Header("Noise")]
-    [SerializeField] private float _currentNoise = 0;
-    [SerializeField] private float _minWalkNoise = 1f;
-    [SerializeField] private float _maxWalkNoise = 2f;
-    [SerializeField] private float _noiseBuildUpSpeed = 0.25f;
+    [SerializeField] private float _minWalkNoise = 0.02f;
+    [SerializeField] private float _maxWalkNoise = 2f; 
+    [SerializeField] private float _noiseBuildUpSpeed = 0.25f; 
     [SerializeField] private float _noiseDecaySpeed = 0.5f;
-    public float CurrentNoise => _currentNoise;
+    [Header("Noise UI")]
+    [SerializeField] private Slider _noiseSlider;
+    private PlayerNoise _playerNoise;
+    public float CurrentNoise => _playerNoise.CurrentNoise;
+    [Header("Look Detection")]
+    [SerializeField] private Transform _lookOrigin;
+    [SerializeField] private float _lookMaxDistance = 45f;
+    [SerializeField] private float _lookMaxAngle = 20;
+    [SerializeField] private LayerMask _statueLayerMask;
+    [Header("Attack Point")]
+    [SerializeField] private Transform attackPoint;
+    public Transform AttackPoint => attackPoint;
+    public void OnAttacked(float damage)
+    {
+        GetPlayerComponentLife.TakeDamage(damage);
+    }
     void Start()
     {
         Cursor.visible = false;
@@ -30,6 +44,7 @@ public class ThirdPersonInputs : MonoBehaviour
         _playerHealth = new PlayerHealth(_initHealth, _animator, this, _healthSlider, _damageParticles);
         _healthSlider.maxValue = _initHealth;
         _healthSlider.value = _initHealth;
+        _playerNoise = new PlayerNoise(_minWalkNoise,_maxWalkNoise,_noiseBuildUpSpeed,_noiseDecaySpeed,_noiseSlider);
     }
     void FixedUpdate()
     {
@@ -45,29 +60,43 @@ public class ThirdPersonInputs : MonoBehaviour
         _animator.SetFloat("MovementX", _getInputs.x);
         _animator.SetFloat("MovementY", _getInputs.y);
         _animator.SetBool("Walk", _getInputs != Vector2.zero);
-        if (_getInputs != Vector2.zero)
+        bool isMoving = _getInputs.sqrMagnitude > 0.01f;
+        _playerNoise.UpdateNoise(isMoving, Time.fixedDeltaTime);
+    }
+    public bool IsLookingAtStatue(Transform statue)
+    {
+        if (_lookOrigin == null) return false;
+        Vector3 origin = _lookOrigin.position;
+        Vector3 forward = _lookOrigin.forward;
+        Vector3 dirToStatue = (statue.position - origin).normalized;
+        float angle = Vector3.Angle(forward, dirToStatue);
+        if (angle > _lookMaxAngle/2) return false;
+        if (Physics.Raycast(origin, dirToStatue, out RaycastHit hit, _lookMaxDistance, _statueLayerMask))
         {
-            if (_currentNoise < _minWalkNoise)
-            {
-                _currentNoise = _minWalkNoise;
-            }
-            else
-            {
-                _currentNoise += _noiseBuildUpSpeed * Time.fixedDeltaTime;
-                _currentNoise = Mathf.Clamp(_currentNoise, _minWalkNoise, _maxWalkNoise);
-            }
+            return hit.transform.GetComponentInParent<StatueEnemy>() != null;
         }
-        else
-        {
-            _currentNoise = Mathf.MoveTowards(_currentNoise,0f,_noiseDecaySpeed * Time.fixedDeltaTime);
-        }
+        return false;
     }
     public void OnDeath()
     {
-        _currentNoise = 0;
         _isDead = true;
+        _playerNoise.ResetNoise();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
     public PlayerHealth GetPlayerComponentLife { get => _playerHealth; }
+    private void OnDrawGizmos()
+    {
+        if (_lookOrigin == null) return;
+        Vector3 origin = _lookOrigin.position;
+        Vector3 forward = _lookOrigin.forward;
+        float halfAngle = _lookMaxAngle * 0.5f;
+        float distance = _lookMaxDistance;
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(origin, forward * distance);
+        Vector3 rightLimit = Quaternion.AngleAxis(halfAngle, Vector3.up) * forward;
+        Vector3 leftLimit = Quaternion.AngleAxis(-halfAngle, Vector3.up) * forward;
+        Gizmos.DrawRay(origin, rightLimit * distance);
+        Gizmos.DrawRay(origin, leftLimit * distance);
+    }
 }

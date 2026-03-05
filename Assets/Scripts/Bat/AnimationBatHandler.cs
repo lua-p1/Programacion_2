@@ -11,7 +11,7 @@ public class AnimationBatHandler : MonoBehaviour
     }
     public void Idle()
     {
-        float batSound = Random.RandomRange(0f, 5f);
+        float batSound = Random.Range(0f, 5f);
         if (batSound < 3f)
         {
             AudioManager.Instance.PlaySoundAtPosition("batIdle", transform.position);
@@ -25,5 +25,9 @@ public class AnimationBatHandler : MonoBehaviour
     public void OnFly()
     {
         AudioManager.Instance.PlaySoundAtPosition("batFlying", transform.position);
+    }
+    public void EndDive()
+    {
+        _bat.EndDiveFromAnimation();
     }
 }

@@ -1,11 +1,11 @@
-using UnityEngine;
-
+﻿using UnityEngine;
 public class DiveAttackState : IState
 {
     private BatEnemy _bat;
     private FSM _fsm;
-    private float _attackDuration = 2f;
+    private float _attackDuration = 1.5f;
     private float _timer;
+    private bool _isAlreadyAttack;
     public DiveAttackState(BatEnemy bat, FSM fsm)
     {
         _bat = bat;
@@ -13,22 +13,28 @@ public class DiveAttackState : IState
     }
     public void OnEnter()
     {
-        _timer = 0;
+        Debug.Log("Enter Dive");
+        _isAlreadyAttack = false;
+        _timer = 0f;
         _bat.Animator.SetTrigger("Dive");
     }
     public void OnUpdate()
     {
-        _timer += Time.deltaTime;
-        _bat.DiveTowardsPlayer();
-
-        if (_bat.HasReachedAttackPoint())
+        _bat.DiveTowardsTarget();
+        if (!_isAlreadyAttack && _bat.HasReachedAttackPoint())
         {
+            Debug.Log("Attack");
             _bat.Attack();
-            _fsm.ChangeState(FSM.State.Retreat);
+            _isAlreadyAttack = true;
+            _timer = 0f;
         }
-        if (_timer > _attackDuration)
+        if (_isAlreadyAttack)
         {
-            _fsm.ChangeState(FSM.State.Retreat);
+            _timer += Time.deltaTime;
+            if (_timer >= _attackDuration)
+            {
+                _fsm.ChangeState(FSM.State.Retreat);
+            }
         }
     }
     public void OnExit()
