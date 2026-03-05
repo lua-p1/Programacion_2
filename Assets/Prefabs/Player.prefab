@@ -1220,7 +1220,7 @@ MonoBehaviour:
   _minWalkNoise: 0.1
   _maxWalkNoise: 2
   _noiseBuildUpSpeed: 0.2
-  _noiseDecaySpeed: 0.05
+  _noiseDecaySpeed: 0.3
   _noiseSlider: {fileID: 0}
   _lookOrigin: {fileID: 6100998241161566330}
   _lookMaxDistance: 45

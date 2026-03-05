@@ -43,27 +43,24 @@ public class BatEnemy : MonoBehaviour
     {
         _attackTarget = null;
         _currentNoiseValue = 0f;
-        var player = GameManager.instance.player;
-        var inputs = player.GetComponent<ThirdPersonInputs>();
-        float playerDistance = Vector3.Distance(transform.position, player.transform.position);
-        if (playerDistance <= hearingRange && inputs.CurrentNoise >= noiseThreshold)
-        {
-            _currentNoiseValue = inputs.CurrentNoise;
-            _attackTarget = inputs.AttackPoint;
-        }
         foreach (var emitter in FindObjectsOfType<NoiseEmitter>())
         {
             if (!emitter.IsActive) continue;
             float dist = Vector3.Distance(transform.position, emitter.transform.position);
             if (dist > hearingRange) continue;
-
-            if (emitter.NoiseAmount > _currentNoiseValue)
-            {
-                _currentNoiseValue = emitter.NoiseAmount;
-                _attackTarget = emitter.NoisePoint;
-            }
+            _attackTarget = emitter.NoisePoint;
+            return true;
         }
-        return _attackTarget != null;
+        var player = GameManager.instance.player;
+        var inputs = player.GetComponent<ThirdPersonInputs>();
+        float playerDistance = Vector3.Distance(transform.position, player.transform.position);
+        if (playerDistance <= hearingRange && inputs.CurrentNoise >= noiseThreshold)
+        {
+            _attackTarget = inputs.AttackPoint;
+            return true;
+        }
+        return false;
+        Debug.Log("Target actual: " + _attackTarget.name);
     }
     public void DiveTowardsTarget()
     {
